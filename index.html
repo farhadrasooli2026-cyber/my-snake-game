@@ -19,9 +19,6 @@ canvas{background:#020d03;border:2px solid #9cff00;border-radius:18px;box-shadow
 <h1>🐍 SNAKE</h1>
 <div class="box"><div class="label">امتیاز</div><div class="value" id="score">0</div></div>
 <div class="box"><div class="label">بهترین امتیاز</div><div class="value" id="best">0</div></div>
-<div class="box"><div class="label">کنترل</div><div style="color:white;margin-top:10px">⬆️ ⬇️ ⬅️ ➡️<br><br>با کلیدهای جهت حرکت کن</div></div>
-<div class="box"><div class="label">قوانین</div><div style="color:white;margin-top:10px">🍎 سیب را بخور<br><br>🐍 مار بزرگ‌تر می‌شود<br><br>🔄 دیوارها قابل عبور هستند</div></div>
-<button onclick="restart()">↻ شروع دوباره</button>
 </div></div>
 <script>
 const canvas=document.getElementById("game"),ctx=canvas.getContext("2d"),W=canvas.width,H=canvas.height;
