@@ -35,7 +35,9 @@ let snake,apple,direction,nextDirection,score,gameOver,speed,lastTime=0;
 let best=Number(localStorage.getItem("snakeBest"))||0;document.getElementById("best").textContent=best;
 function restart(){snake=[];for(let i=0;i<7;i++)snake.push({x:380-i*22,y:300});direction={x:1,y:0};nextDirection={x:1,y:0};score=0;gameOver=false;speed=110;document.getElementById("score").textContent=0;createApple();lastTime=performance.now();requestAnimationFrame(loop)}
 function createApple(){apple={x:30+Math.random()*(W-60),y:30+Math.random()*(H-60)};for(const p of snake){if(Math.hypot(apple.x-p.x,apple.y-p.y)<45){createApple();return}}}
-function update(){if(gameOver)return;direction=nextDirection;let head={x:snake[0].x+direction.x*22,y:snake[0].y+direction.y*22};
+function update(){if(gameOver)return;if(bigApple && Date.now() >= bigAppleVisibleUntil){
+    bigApple = null;
+}direction=nextDirection;let head={x:snake[0].x+direction.x*22,y:snake[0].y+direction.y*22};
 if(head.x<0)head.x=W;if(head.x>W)head.x=0;if(head.y<0)head.y=H;if(head.y>H)head.y=0;
 for(let i=1;i<snake.length;i++)if(Math.hypot(head.x-snake[i].x,head.y-snake[i].y)<17){endGame();return}
 snake.unshift(head);
