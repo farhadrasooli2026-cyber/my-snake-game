@@ -6,521 +6,657 @@
 <meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width,
-initial-scale=1.0,
-maximum-scale=1.0,
-user-scalable=no">
+      content="width=device-width,
+               initial-scale=1.0,
+               maximum-scale=1.0,
+               user-scalable=no,
+               viewport-fit=cover">
 
 <title>Snake Game</title>
 
 <style>
 
-*{
-    box-sizing:border-box;
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
 html,
-body{
-    margin:0;
-    padding:0;
-    width:100%;
-    min-height:100%;
-    background:#020902;
-    color:#9cff00;
-    font-family:Arial,sans-serif;
-    overflow:hidden;
-    touch-action:none;
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+    background: #020902;
+    color: #9cff00;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+    touch-action: none;
 }
 
-body{
-    display:flex;
-    justify-content:center;
-    align-items:center;
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.game{
-    width:100%;
-    max-width:1100px;
-    padding:15px;
-    display:flex;
-    gap:20px;
-    justify-content:center;
-    align-items:center;
+
+/* =====================================================
+   صفحه اصلی
+===================================================== */
+
+.game {
+    width: 100%;
+    max-width: 1100px;
+
+    min-height: 100vh;
+
+    padding: 15px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 20px;
 }
 
-/* =========================
+
+/* =====================================================
    قسمت بازی
-========================= */
+===================================================== */
 
-.game-area{
-    width:760px;
-    max-width:100%;
-    position:relative;
+.game-area {
+    position: relative;
+
+    width: 760px;
+    max-width: 100%;
 }
 
-canvas{
-    width:100%;
-    height:auto;
-    display:block;
 
-    background:#020d03;
+/* =====================================================
+   Canvas
+===================================================== */
 
-    border:2px solid #9cff00;
-    border-radius:18px;
+canvas {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    background: #020d03;
+
+    border: 2px solid #9cff00;
+
+    border-radius: 18px;
 
     box-shadow:
         0 0 15px #5aff00,
-        0 0 35px rgba(90,255,0,.25);
+        0 0 35px rgba(90,255,0,.30);
 }
 
 
-/* =========================
-   پنل
-========================= */
+/* =====================================================
+   پنل سمت راست
+===================================================== */
 
-.panel{
-    width:260px;
-    flex-shrink:0;
+.panel {
+    width: 260px;
+    flex-shrink: 0;
 }
 
-h1{
-    margin:5px 0 20px;
-    text-align:center;
+h1 {
+    margin: 5px 0 20px;
 
-    direction:ltr;
+    text-align: center;
 
-    font-size:38px;
+    direction: ltr;
 
-    color:#9cff00;
+    font-size: 38px;
+
+    color: #9cff00;
 
     text-shadow:
         0 0 10px #76ff00,
         0 0 25px #4dff00;
 }
 
-.box{
-    border:1px solid #5eff00;
+.box {
+    border: 1px solid #5eff00;
 
-    border-radius:15px;
+    border-radius: 15px;
 
-    padding:18px;
+    padding: 18px;
 
-    margin-bottom:15px;
+    margin-bottom: 15px;
 
-    text-align:center;
+    text-align: center;
 
-    background:rgba(0,20,0,.55);
+    background: rgba(0,20,0,.55);
 
     box-shadow:
         inset 0 0 15px rgba(80,255,0,.08);
 }
 
-.label{
-    color:#fff3a0;
-    font-size:20px;
+.label {
+    color: #fff3a0;
+    font-size: 20px;
 }
 
-.value{
-    margin-top:8px;
+.value {
+    margin-top: 8px;
 
-    font-size:30px;
+    font-size: 30px;
 
-    direction:ltr;
+    direction: ltr;
 }
 
 
-/* =========================
+/* =====================================================
    دکمه شروع دوباره
-========================= */
+===================================================== */
 
-.restart-btn{
+.restart-btn {
 
-    width:100%;
+    width: 100%;
 
-    padding:14px;
+    padding: 14px;
 
-    border-radius:12px;
+    border-radius: 12px;
 
-    border:2px solid #9cff00;
+    border: 2px solid #9cff00;
 
-    background:transparent;
+    background: transparent;
 
-    color:#9cff00;
+    color: #9cff00;
 
-    font-size:19px;
+    font-size: 19px;
 
-    cursor:pointer;
+    cursor: pointer;
 
-    transition:.2s;
-
-}
-
-.restart-btn:hover{
-
-    background:#9cff00;
-
-    color:#020902;
-
-    box-shadow:0 0 20px #9cff00;
+    box-shadow:
+        0 0 8px rgba(100,255,0,.15);
 
 }
 
+.restart-btn:active {
 
-/* =========================
-   کنترل دایره ای
-========================= */
+    background: #9cff00;
 
-.controls{
+    color: #020902;
 
-    display:none;
-
-    width:180px;
-    height:180px;
-
-    margin:12px auto 0;
-
-    position:relative;
 }
 
 
-/* دایره اصلی */
+/* =====================================================
+   کنترل دایره‌ای
+===================================================== */
 
-.control-circle{
+.controls {
 
-    position:absolute;
+    display: none;
 
-    left:50%;
-    top:50%;
+    width: 180px;
+    height: 180px;
 
-    transform:translate(-50%,-50%);
+    margin: 10px auto 5px;
 
-    width:170px;
-    height:170px;
+    position: relative;
+}
 
-    border-radius:50%;
 
-    border:2px solid #9cff00;
+/* دایره */
+
+.control-circle {
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 174px;
+    height: 174px;
+
+    border-radius: 50%;
+
+    border: 2px solid #9cff00;
 
     background:
         radial-gradient(
             circle,
-            rgba(20,70,10,.9),
+            rgba(30,90,10,.75),
             rgba(0,15,0,.95)
         );
 
     box-shadow:
-        0 0 20px rgba(100,255,0,.3),
+        0 0 20px rgba(100,255,0,.35),
         inset 0 0 20px rgba(100,255,0,.15);
 }
 
 
-/* دکمه های جهت */
+/* دکمه‌های جهت */
 
-.direction{
+.direction {
 
-    position:absolute;
+    position: absolute;
 
-    width:55px;
-    height:55px;
+    width: 56px;
+    height: 56px;
 
-    border-radius:50%;
+    border-radius: 50%;
 
-    border:2px solid #9cff00;
+    border: 2px solid #9cff00;
 
-    background:rgba(0,30,0,.9);
+    background: rgba(0,35,0,.95);
 
-    color:#9cff00;
+    color: #ffffff;
 
-    font-size:25px;
+    font-size: 26px;
 
-    display:flex;
+    display: flex;
 
-    align-items:center;
-    justify-content:center;
+    justify-content: center;
+    align-items: center;
 
-    cursor:pointer;
+    cursor: pointer;
 
-    user-select:none;
-
-    -webkit-tap-highlight-color:transparent;
+    z-index: 5;
 
     box-shadow:
-        0 0 10px rgba(100,255,0,.25);
-
-    transition:.1s;
+        0 0 10px rgba(100,255,0,.35);
 
 }
 
 
 /* بالا */
 
-.up{
+.up {
 
-    top:8px;
-    left:50%;
+    top: 7px;
+    left: 50%;
 
-    transform:translateX(-50%);
-
+    transform: translateX(-50%);
 }
 
 
 /* پایین */
 
-.down{
+.down {
 
-    bottom:8px;
-    left:50%;
+    bottom: 7px;
+    left: 50%;
 
-    transform:translateX(-50%);
-
+    transform: translateX(-50%);
 }
 
 
 /* چپ */
 
-.left{
+.left {
 
-    left:8px;
-    top:50%;
+    left: 7px;
+    top: 50%;
 
-    transform:translateY(-50%);
-
+    transform: translateY(-50%);
 }
 
 
 /* راست */
 
-.right{
+.right {
 
-    right:8px;
-    top:50%;
+    right: 7px;
+    top: 50%;
 
-    transform:translateY(-50%);
-
+    transform: translateY(-50%);
 }
 
 
-/* مرکز */
+/* وسط */
 
-.center{
+.center {
 
-    position:absolute;
+    position: absolute;
 
-    left:50%;
-    top:50%;
+    left: 50%;
+    top: 50%;
 
-    transform:translate(-50%,-50%);
+    transform: translate(-50%, -50%);
 
-    width:42px;
-    height:42px;
+    width: 44px;
+    height: 44px;
 
-    border-radius:50%;
+    border-radius: 50%;
 
-    background:#4dff00;
+    background: #4dff00;
 
     box-shadow:
-        0 0 20px #4dff00;
+        0 0 20px #4dff00,
+        0 0 35px rgba(77,255,0,.5);
 
+    z-index: 3;
 }
 
 
-/* حالت فشرده */
-
-.direction:active{
-
-    background:#9cff00;
-
-    color:#020902;
-
-    transform:scale(.9);
-
-}
-
-.up:active,
-.down:active{
-
-    transform:translateX(-50%) scale(.9);
-
-}
-
-.left:active,
-.right:active{
-
-    transform:translateY(-50%) scale(.9);
-
-}
-
-
-/* =========================
+/* =====================================================
    Game Over
-========================= */
+===================================================== */
 
-.game-over{
+.game-over {
 
-    position:absolute;
+    position: absolute;
 
-    inset:0;
+    inset: 0;
 
-    border-radius:18px;
+    border-radius: 18px;
 
-    background:rgba(0,0,0,.75);
+    background: rgba(0,0,0,.76);
 
-    display:none;
+    display: none;
 
-    flex-direction:column;
+    flex-direction: column;
 
-    align-items:center;
-    justify-content:center;
+    justify-content: center;
 
-    text-align:center;
+    align-items: center;
+
+    text-align: center;
+
+    z-index: 20;
+}
+
+.game-over.show {
+
+    display: flex;
 
 }
 
-.game-over.show{
+.game-over-title {
 
-    display:flex;
+    direction: ltr;
 
+    font-size: 48px;
+
+    font-weight: bold;
+
+    color: #9cff00;
+
+    text-shadow:
+        0 0 15px #76ff00,
+        0 0 30px #4dff00;
 }
 
-.game-over-title{
+.game-over-score {
 
-    direction:ltr;
+    color: white;
 
-    color:#9cff00;
+    font-size: 21px;
 
-    font-size:48px;
-
-    font-weight:bold;
-
-    text-shadow:0 0 20px #76ff00;
-
+    margin: 12px;
 }
 
-.game-over-score{
+.game-over button {
 
-    color:white;
+    padding: 12px 25px;
 
-    font-size:22px;
+    border-radius: 10px;
 
-    margin:10px;
+    border: 2px solid #9cff00;
 
-}
+    background: transparent;
 
-.game-over button{
+    color: #9cff00;
 
-    padding:12px 25px;
-
-    border-radius:10px;
-
-    border:2px solid #9cff00;
-
-    background:transparent;
-
-    color:#9cff00;
-
-    font-size:18px;
+    font-size: 18px;
 
 }
 
 
-/* =========================
+/* =====================================================
    موبایل
-========================= */
+===================================================== */
 
-@media(max-width:900px){
+@media (max-width: 900px) {
 
     html,
-    body{
+    body {
 
-        overflow-y:auto;
+        width: 100vw;
+
+        min-width: 100vw;
+
+        min-height: 100vh;
+
+        overflow-x: hidden;
+
+        overflow-y: auto;
+    }
+
+
+    body {
+
+        display: block;
 
     }
 
-    body{
 
-        align-items:flex-start;
+    .game {
+
+        width: 100vw;
+
+        min-height: 100vh;
+
+        padding: 8px;
+
+        margin: 0;
+
+        display: flex;
+
+        flex-direction: column;
+
+        justify-content: flex-start;
+
+        align-items: stretch;
+
+        gap: 5px;
+    }
+
+
+    .game-area {
+
+        width: 100%;
+
+        max-width: none;
+
+        margin: 0;
 
     }
 
-    .game{
 
-        flex-direction:column;
+    canvas {
 
-        padding:8px;
+        width: 100%;
 
-        gap:8px;
+        max-width: none;
 
-    }
+        height: auto;
 
-    .game-area{
-
-        width:100%;
+        border-radius: 17px;
 
     }
 
-    .panel{
 
-        width:100%;
+    /* کنترل‌ها روی موبایل */
 
-        display:flex;
+    .controls {
 
-        flex-wrap:wrap;
-
-        justify-content:center;
-
-        gap:7px;
+        display: block;
 
     }
 
-    h1{
 
-        width:100%;
+    /* پنل */
 
-        font-size:30px;
+    .panel {
 
-        margin:2px 0 5px;
+        width: 100%;
 
-    }
+        display: flex;
 
-    .box{
+        flex-wrap: wrap;
 
-        flex:1;
+        align-items: stretch;
 
-        min-width:140px;
+        justify-content: center;
 
-        margin:0;
-
-        padding:9px;
+        gap: 7px;
 
     }
 
-    .label{
 
-        font-size:16px;
+    h1 {
+
+        width: 100%;
+
+        order: 1;
+
+        margin: 0;
+
+        font-size: 29px;
+
+        line-height: 1.1;
+    }
+
+
+    .box {
+
+        order: 2;
+
+        width: calc(50% - 4px);
+
+        flex: 1 1 calc(50% - 4px);
+
+        min-width: 0;
+
+        margin: 0;
+
+        padding: 9px 4px;
+
+        border-radius: 15px;
+    }
+
+
+    .label {
+
+        font-size: 16px;
+
+        white-space: nowrap;
+    }
+
+
+    .value {
+
+        margin-top: 4px;
+
+        font-size: 27px;
+    }
+
+
+    .restart-btn {
+
+        order: 3;
+
+        width: 100%;
+
+        margin: 0;
+
+        min-height: 52px;
+
+        font-size: 18px;
+    }
+
+
+    .game-over-title {
+
+        font-size: 40px;
 
     }
 
-    .value{
+}
 
-        font-size:24px;
 
+/* =====================================================
+   گوشی‌های کوچک
+===================================================== */
+
+@media (max-width: 420px) {
+
+    .game {
+
+        padding: 5px;
+
+        gap: 4px;
     }
 
-    .restart-btn{
 
-        margin-top:4px;
+    .controls {
 
+        width: 165px;
+
+        height: 165px;
+
+        margin: 5px auto 3px;
     }
 
-    .controls{
 
-        display:block;
+    .control-circle {
 
+        width: 160px;
+
+        height: 160px;
+    }
+
+
+    .direction {
+
+        width: 52px;
+
+        height: 52px;
+
+        font-size: 23px;
+    }
+
+
+    h1 {
+
+        font-size: 27px;
+    }
+
+
+    .label {
+
+        font-size: 15px;
+    }
+
+
+    .value {
+
+        font-size: 25px;
+    }
+
+
+    .restart-btn {
+
+        min-height: 49px;
+
+        font-size: 17px;
     }
 
 }
 
 </style>
+
 </head>
 
 
@@ -530,11 +666,12 @@ h1{
 <div class="game">
 
 
-    <!-- =====================
-         بازی
-    ====================== -->
+    <!-- =================================================
+         قسمت بازی
+    ================================================== -->
 
     <div class="game-area">
+
 
         <canvas
             id="game"
@@ -543,7 +680,9 @@ h1{
         </canvas>
 
 
-        <!-- Game Over -->
+        <!-- =================================================
+             Game Over
+        ================================================== -->
 
         <div
             id="gameOver"
@@ -556,20 +695,25 @@ h1{
             <div class="game-over-score">
 
                 امتیاز شما:
-                <span id="finalScore">0</span>
+
+                <span id="finalScore">
+                    0
+                </span>
 
             </div>
 
             <button onclick="restart()">
+
                 🔄 شروع دوباره
+
             </button>
 
         </div>
 
 
-        <!-- =====================
-             کنترل دایره ای
-        ====================== -->
+        <!-- =================================================
+             کنترل دایره‌ای
+        ================================================== -->
 
         <div class="controls">
 
@@ -579,28 +723,36 @@ h1{
             <button
                 class="direction up"
                 onclick="changeDirection('up')">
+
                 ⬆
+
             </button>
 
 
             <button
                 class="direction left"
                 onclick="changeDirection('left')">
+
                 ⬅
+
             </button>
 
 
             <button
                 class="direction right"
                 onclick="changeDirection('right')">
+
                 ➡
+
             </button>
 
 
             <button
                 class="direction down"
                 onclick="changeDirection('down')">
+
                 ⬇
+
             </button>
 
 
@@ -611,12 +763,12 @@ h1{
     </div>
 
 
-
-    <!-- =====================
+    <!-- =================================================
          پنل اطلاعات
-    ====================== -->
+    ================================================== -->
 
     <div class="panel">
+
 
         <h1>
             🐍 SNAKE
@@ -630,9 +782,11 @@ h1{
             </div>
 
             <div
-                class="value"
-                id="score">
+                id="score"
+                class="value">
+
                 0
+
             </div>
 
         </div>
@@ -645,9 +799,11 @@ h1{
             </div>
 
             <div
-                class="value"
-                id="best">
+                id="best"
+                class="value">
+
                 0
+
             </div>
 
         </div>
@@ -661,14 +817,13 @@ h1{
 
         </button>
 
+
     </div>
 
 </div>
 
 
-
 <script>
-
 
 /* =====================================================
    تنظیمات
@@ -680,18 +835,20 @@ const canvas =
 const ctx =
     canvas.getContext("2d");
 
-
 const W = canvas.width;
-
 const H = canvas.height;
 
 
-/* اندازه حرکت مار */
+/*
+    هر حرکت مار 22 پیکسل
+*/
 
 const GRID = 22;
 
 
-/* سرعت */
+/*
+    سرعت بازی
+*/
 
 const SPEED = 110;
 
@@ -708,14 +865,14 @@ let bigApple = null;
 
 
 let direction = {
-    x:1,
-    y:0
+    x: 1,
+    y: 0
 };
 
 
 let nextDirection = {
-    x:1,
-    y:0
+    x: 1,
+    y: 0
 };
 
 
@@ -737,15 +894,9 @@ let lastTime = 0;
 ===================================================== */
 
 /*
+    هر 15 ثانیه یک سیب بزرگ
 
-هر 15 ثانیه:
-
-سیب بزرگ ظاهر می شود.
-
-مدت نمایش:
-
-4 ثانیه.
-
+    مدت نمایش = 4 ثانیه
 */
 
 let bigAppleNextTime =
@@ -755,31 +906,33 @@ let bigAppleVisibleUntil = 0;
 
 
 /* =====================================================
-   نمایش بهترین امتیاز
+   نمایش رکورد
 ===================================================== */
 
-document.getElementById("best").textContent =
-    best;
+document.getElementById("best")
+    .textContent = best;
 
 
 /* =====================================================
    شروع بازی
 ===================================================== */
 
-function restart(){
+function restart() {
 
     snake = [];
 
 
-    /* ساخت مار اولیه */
+    /*
+        مار اولیه 7 قسمت دارد
+    */
 
-    for(let i=0;i<7;i++){
+    for (let i = 0; i < 7; i++) {
 
         snake.push({
 
-            x:380 - i * GRID,
+            x: 380 - i * GRID,
 
-            y:300
+            y: 300
 
         });
 
@@ -787,14 +940,14 @@ function restart(){
 
 
     direction = {
-        x:1,
-        y:0
+        x: 1,
+        y: 0
     };
 
 
     nextDirection = {
-        x:1,
-        y:0
+        x: 1,
+        y: 0
     };
 
 
@@ -805,7 +958,10 @@ function restart(){
     bigApple = null;
 
 
-    /* اولین سیب بزرگ 15 ثانیه بعد */
+    /*
+        اولین سیب بزرگ
+        15 ثانیه بعد ظاهر می‌شود
+    */
 
     bigAppleNextTime =
         Date.now() + 15000;
@@ -842,18 +998,18 @@ function restart(){
    ساخت سیب معمولی
 ===================================================== */
 
-function createApple(){
+function createApple() {
 
     let attempts = 0;
 
 
-    do{
+    do {
 
         apple = {
 
-            x:30 + Math.random() * (W - 60),
+            x: 30 + Math.random() * (W - 60),
 
-            y:30 + Math.random() * (H - 60)
+            y: 30 + Math.random() * (H - 60)
 
         };
 
@@ -861,17 +1017,18 @@ function createApple(){
         attempts++;
 
 
-    }
-
-    while(
+    } while (
 
         snake.some(
 
             p =>
 
             Math.hypot(
+
                 apple.x - p.x,
+
                 apple.y - p.y
+
             ) < 45
 
         )
@@ -889,18 +1046,18 @@ function createApple(){
    ساخت سیب بزرگ
 ===================================================== */
 
-function createBigApple(){
+function createBigApple() {
 
     let attempts = 0;
 
 
-    do{
+    do {
 
         bigApple = {
 
-            x:40 + Math.random() * (W - 80),
+            x: 45 + Math.random() * (W - 90),
 
-            y:40 + Math.random() * (H - 80)
+            y: 45 + Math.random() * (H - 90)
 
         };
 
@@ -908,18 +1065,19 @@ function createBigApple(){
         attempts++;
 
 
-    }
-
-    while(
+    } while (
 
         snake.some(
 
             p =>
 
             Math.hypot(
+
                 bigApple.x - p.x,
+
                 bigApple.y - p.y
-            ) < 45
+
+            ) < 50
 
         )
 
@@ -930,7 +1088,9 @@ function createBigApple(){
     );
 
 
-    /* سیب بزرگ 4 ثانیه می ماند */
+    /*
+        سیب بزرگ فقط 4 ثانیه دیده می‌شود
+    */
 
     bigAppleVisibleUntil =
         Date.now() + 4000;
@@ -942,60 +1102,84 @@ function createBigApple(){
    تغییر جهت
 ===================================================== */
 
-function changeDirection(dir){
+function changeDirection(dir) {
 
 
-    if(
-        dir === "up"
-        &&
+    /*
+        بالا
+    */
+
+    if (
+
+        dir === "up" &&
+
         direction.y !== 1
-    ){
+
+    ) {
 
         nextDirection = {
-            x:0,
-            y:-1
+            x: 0,
+            y: -1
         };
 
     }
 
 
-    if(
-        dir === "down"
-        &&
+    /*
+        پایین
+    */
+
+    if (
+
+        dir === "down" &&
+
         direction.y !== -1
-    ){
+
+    ) {
 
         nextDirection = {
-            x:0,
-            y:1
+            x: 0,
+            y: 1
         };
 
     }
 
 
-    if(
-        dir === "left"
-        &&
+    /*
+        چپ
+    */
+
+    if (
+
+        dir === "left" &&
+
         direction.x !== 1
-    ){
+
+    ) {
 
         nextDirection = {
-            x:-1,
-            y:0
+            x: -1,
+            y: 0
         };
 
     }
 
 
-    if(
-        dir === "right"
-        &&
+    /*
+        راست
+    */
+
+    if (
+
+        dir === "right" &&
+
         direction.x !== -1
-    ){
+
+    ) {
 
         nextDirection = {
-            x:1,
-            y:0
+            x: 1,
+            y: 0
         };
 
     }
@@ -1007,9 +1191,9 @@ function changeDirection(dir){
    آپدیت بازی
 ===================================================== */
 
-function update(){
+function update() {
 
-    if(gameOver)
+    if (gameOver)
         return;
 
 
@@ -1017,35 +1201,39 @@ function update(){
 
 
     /* =================================================
-       سیب بزرگ
+       حذف سیب بزرگ بعد از 4 ثانیه
     ================================================= */
 
-    /* اگر سیب بزرگ منقضی شده */
+    if (
 
-    if(
         bigApple &&
+
         now >= bigAppleVisibleUntil
-    ){
+
+    ) {
 
         bigApple = null;
 
     }
 
 
-    /* اگر 15 ثانیه گذشته */
+    /* =================================================
+       ظاهر شدن سیب بزرگ هر 15 ثانیه
+    ================================================= */
 
-    if(
+    if (
+
         !bigApple &&
+
         now >= bigAppleNextTime
-    ){
+
+    ) {
 
         createBigApple();
 
 
         /*
-          زمان بعدی:
-
-          15 ثانیه بعد از ظاهر شدن
+            زمان بعدی ظاهر شدن
         */
 
         bigAppleNextTime =
@@ -1054,11 +1242,16 @@ function update(){
     }
 
 
-    /* اعمال جهت */
+    /* =================================================
+       اعمال جهت
+    ================================================= */
 
     direction = {
-        x:nextDirection.x,
-        y:nextDirection.y
+
+        x: nextDirection.x,
+
+        y: nextDirection.y
+
     };
 
 
@@ -1085,45 +1278,37 @@ function update(){
        عبور از دیوار
     ================================================= */
 
-    if(head.x < 0){
-
-        head.x = W;
-
-    }
+    if (head.x < 0)
+        head.x = W - GRID;
 
 
-    if(head.x > W){
-
+    if (head.x >= W)
         head.x = 0;
 
-    }
+
+    if (head.y < 0)
+        head.y = H - GRID;
 
 
-    if(head.y < 0){
-
-        head.y = H;
-
-    }
-
-
-    if(head.y > H){
-
+    if (head.y >= H)
         head.y = 0;
-
-    }
 
 
     /* =================================================
        برخورد با بدن خودش
     ================================================= */
 
-    for(
-        let i=1;
-        i<snake.length;
-        i++
-    ){
+    for (
 
-        if(
+        let i = 1;
+
+        i < snake.length;
+
+        i++
+
+    ) {
+
+        if (
 
             Math.hypot(
 
@@ -1133,7 +1318,7 @@ function update(){
 
             ) < 18
 
-        ){
+        ) {
 
             endGame();
 
@@ -1144,7 +1329,9 @@ function update(){
     }
 
 
-    /* اضافه کردن سر */
+    /* =================================================
+       اضافه کردن سر
+    ================================================= */
 
     snake.unshift(head);
 
@@ -1156,7 +1343,7 @@ function update(){
        خوردن سیب معمولی
     ================================================= */
 
-    if(
+    if (
 
         apple &&
 
@@ -1168,27 +1355,25 @@ function update(){
 
         ) < 28
 
-    ){
+    ) {
 
         /*
-          سیب معمولی:
+            سیب معمولی:
 
-          10 امتیاز
+            10 امتیاز
         */
 
         score += 10;
-
 
         ate = true;
 
 
         /*
-          چون ate=true است
-          دم حذف نمی شود
+            دم حذف نمی‌شود
 
-          بنابراین مار بزرگ می شود.
+            پس مار یک قسمت
+            بزرگ‌تر می‌شود
         */
-
 
         createApple();
 
@@ -1199,7 +1384,7 @@ function update(){
        خوردن سیب بزرگ
     ================================================= */
 
-    if(
+    if (
 
         bigApple &&
 
@@ -1211,23 +1396,21 @@ function update(){
 
         ) < 32
 
-    ){
+    ) {
 
         /*
-          سیب بزرگ:
+            سیب بزرگ:
 
-          50 امتیاز
+            50 امتیاز
         */
 
         score += 50;
-
 
         ate = true;
 
 
         /*
-          سیب بزرگ بلافاصله
-          ناپدید می شود
+            بلافاصله ناپدید می‌شود
         */
 
         bigApple = null;
@@ -1236,11 +1419,11 @@ function update(){
 
 
     /* =================================================
-       اگر سیب نخورده باشد
-       دم مار حذف شود
+       اگر چیزی نخورده:
+       دم حذف شود
     ================================================= */
 
-    if(!ate){
+    if (!ate) {
 
         snake.pop();
 
@@ -1248,10 +1431,10 @@ function update(){
 
 
     /* =================================================
-       رکورد
+       ذخیره بهترین امتیاز
     ================================================= */
 
-    if(score > best){
+    if (score > best) {
 
         best = score;
 
@@ -1278,26 +1461,25 @@ function update(){
    رسم سیب معمولی
 ===================================================== */
 
-function drawApple(){
+function drawApple() {
 
-    if(!apple)
+    if (!apple)
         return;
 
 
     ctx.save();
 
 
-    ctx.shadowColor =
-        "#ff2200";
+    ctx.shadowColor = "#ff2200";
 
     ctx.shadowBlur = 20;
 
-
-    ctx.fillStyle =
-        "#ff3020";
+    ctx.fillStyle = "#ff3020";
 
 
-    /* دو طرف سیب */
+    /*
+        دو قسمت سیب
+    */
 
     ctx.beginPath();
 
@@ -1320,7 +1502,9 @@ function drawApple(){
     ctx.fill();
 
 
-    /* بدنه */
+    /*
+        بدنه
+    */
 
     ctx.beginPath();
 
@@ -1335,7 +1519,9 @@ function drawApple(){
     ctx.fill();
 
 
-    /* برگ */
+    /*
+        برگ
+    */
 
     ctx.shadowBlur = 5;
 
@@ -1351,13 +1537,14 @@ function drawApple(){
         Math.PI * 2
     );
 
-    ctx.fillStyle =
-        "#55ff00";
+    ctx.fillStyle = "#55ff00";
 
     ctx.fill();
 
 
-    /* ساقه */
+    /*
+        ساقه
+    */
 
     ctx.beginPath();
 
@@ -1371,8 +1558,7 @@ function drawApple(){
         apple.y - 22
     );
 
-    ctx.strokeStyle =
-        "#8b4513";
+    ctx.strokeStyle = "#8b4513";
 
     ctx.lineWidth = 4;
 
@@ -1388,57 +1574,57 @@ function drawApple(){
    رسم سیب بزرگ
 ===================================================== */
 
-function drawBigApple(){
+function drawBigApple() {
 
-    if(!bigApple)
+    if (!bigApple)
         return;
 
 
     ctx.save();
 
 
-    /* درخشش قرمز */
-
-    ctx.shadowColor =
-        "#ff0000";
+    ctx.shadowColor = "#ff0000";
 
     ctx.shadowBlur = 35;
 
 
-    /* بدنه سیب */
+    /*
+        گرادیان سیب بزرگ
+    */
 
     const gradient =
         ctx.createRadialGradient(
 
-            bigApple.x - 7,
+            bigApple.x - 8,
             bigApple.y - 8,
             3,
 
             bigApple.x,
             bigApple.y,
-            25
+            27
 
         );
 
 
     gradient.addColorStop(
         0,
-        "#ff6666"
+        "#ff7777"
     );
 
+
     gradient.addColorStop(
-        .35,
-        "#ff2020"
+        0.35,
+        "#ff2222"
     );
+
 
     gradient.addColorStop(
         1,
-        "#aa0000"
+        "#a90000"
     );
 
 
-    ctx.fillStyle =
-        gradient;
+    ctx.fillStyle = gradient;
 
 
     ctx.beginPath();
@@ -1446,7 +1632,7 @@ function drawBigApple(){
     ctx.arc(
         bigApple.x,
         bigApple.y,
-        24,
+        25,
         0,
         Math.PI * 2
     );
@@ -1454,18 +1640,19 @@ function drawBigApple(){
     ctx.fill();
 
 
-    /* ساقه */
+    /*
+        ساقه
+    */
 
-    ctx.shadowBlur = 8;
+    ctx.shadowBlur = 5;
 
-    ctx.fillStyle =
-        "#00ff00";
+    ctx.fillStyle = "#00ff00";
 
     ctx.fillRect(
 
         bigApple.x - 3,
 
-        bigApple.y - 33,
+        bigApple.y - 34,
 
         6,
 
@@ -1474,21 +1661,23 @@ function drawBigApple(){
     );
 
 
-    /* برگ */
+    /*
+        برگ
+    */
 
     ctx.beginPath();
 
     ctx.ellipse(
 
-        bigApple.x + 9,
+        bigApple.x + 10,
 
-        bigApple.y - 29,
+        bigApple.y - 30,
 
         9,
 
         5,
 
-        -.4,
+        -0.4,
 
         0,
 
@@ -1499,10 +1688,11 @@ function drawBigApple(){
     ctx.fill();
 
 
-    /* برق روی سیب */
+    /*
+        برق روی سیب
+    */
 
-    ctx.fillStyle =
-        "white";
+    ctx.fillStyle = "#ffffff";
 
     ctx.shadowBlur = 0;
 
@@ -1534,9 +1724,9 @@ function drawBigApple(){
    رسم مار
 ===================================================== */
 
-function drawSnake(){
+function drawSnake() {
 
-    if(
+    if (
         !snake ||
         snake.length === 0
     )
@@ -1546,15 +1736,13 @@ function drawSnake(){
     ctx.save();
 
 
-    ctx.lineCap =
-        "round";
+    ctx.lineCap = "round";
 
-    ctx.lineJoin =
-        "round";
+    ctx.lineJoin = "round";
 
 
     /* =================================================
-       بدن
+       بدن اصلی
     ================================================= */
 
     ctx.beginPath();
@@ -1566,11 +1754,11 @@ function drawSnake(){
     );
 
 
-    for(
-        let i=1;
-        i<snake.length;
+    for (
+        let i = 1;
+        i < snake.length;
         i++
-    ){
+    ) {
 
         ctx.lineTo(
             snake[i].x,
@@ -1580,13 +1768,11 @@ function drawSnake(){
     }
 
 
-    ctx.strokeStyle =
-        "#4dff00";
+    ctx.strokeStyle = "#4dff00";
 
     ctx.lineWidth = 30;
 
-    ctx.shadowColor =
-        "#52ff00";
+    ctx.shadowColor = "#52ff00";
 
     ctx.shadowBlur = 22;
 
@@ -1594,7 +1780,7 @@ function drawSnake(){
 
 
     /* =================================================
-       خط روشن وسط بدن
+       خط روشن وسط
     ================================================= */
 
     ctx.beginPath();
@@ -1606,11 +1792,11 @@ function drawSnake(){
     );
 
 
-    for(
-        let i=1;
-        i<snake.length;
+    for (
+        let i = 1;
+        i < snake.length;
         i++
-    ){
+    ) {
 
         ctx.lineTo(
             snake[i].x,
@@ -1620,8 +1806,7 @@ function drawSnake(){
     }
 
 
-    ctx.strokeStyle =
-        "#b4ff50";
+    ctx.strokeStyle = "#b4ff50";
 
     ctx.lineWidth = 8;
 
@@ -1631,11 +1816,10 @@ function drawSnake(){
 
 
     /* =================================================
-       سر مار
+       سر
     ================================================= */
 
-    const h =
-        snake[0];
+    const h = snake[0];
 
 
     const sx =
@@ -1656,26 +1840,25 @@ function drawSnake(){
 
     const eye1 = {
 
-        x:h.x + fx + sx,
+        x: h.x + fx + sx,
 
-        y:h.y + fy + sy
+        y: h.y + fy + sy
 
     };
 
 
     const eye2 = {
 
-        x:h.x + fx - sx,
+        x: h.x + fx - sx,
 
-        y:h.y + fy - sy
+        y: h.y + fy - sy
 
     };
 
 
     /* سر */
 
-    ctx.shadowColor =
-        "#7cff00";
+    ctx.shadowColor = "#7cff00";
 
     ctx.shadowBlur = 25;
 
@@ -1697,22 +1880,21 @@ function drawSnake(){
     );
 
 
-    ctx.fillStyle =
-        "#63ff00";
+    ctx.fillStyle = "#63ff00";
 
     ctx.fill();
 
 
-    /* چشم */
+    /* =================================================
+       چشم‌ها
+    ================================================= */
 
     ctx.shadowBlur = 3;
 
-    ctx.fillStyle =
-        "black";
+    ctx.fillStyle = "#000000";
 
 
     ctx.beginPath();
-
 
     ctx.arc(
 
@@ -1765,41 +1947,44 @@ function drawSnake(){
 
     ctx.lineTo(
 
-        h.x + direction.x * 32,
+        h.x + direction.x * 31,
 
-        h.y + direction.y * 32
+        h.y + direction.y * 31
 
     );
 
 
-    ctx.strokeStyle =
-        "#ff3030";
+    ctx.strokeStyle = "#ff3030";
 
     ctx.lineWidth = 2;
 
     ctx.stroke();
 
 
-    /* دو شاخه زبان */
+    /*
+        دو شاخه زبان
+    */
 
     ctx.beginPath();
 
 
     ctx.moveTo(
 
-        h.x + direction.x * 32,
+        h.x + direction.x * 31,
 
-        h.y + direction.y * 32
+        h.y + direction.y * 31
 
     );
 
 
     ctx.lineTo(
 
-        h.x + direction.x * 39
+        h.x
+        + direction.x * 39
         - direction.y * 5,
 
-        h.y + direction.y * 39
+        h.y
+        + direction.y * 39
         + direction.x * 5
 
     );
@@ -1807,19 +1992,21 @@ function drawSnake(){
 
     ctx.moveTo(
 
-        h.x + direction.x * 32,
+        h.x + direction.x * 31,
 
-        h.y + direction.y * 32
+        h.y + direction.y * 31
 
     );
 
 
     ctx.lineTo(
 
-        h.x + direction.x * 39
+        h.x
+        + direction.x * 39
         + direction.y * 5,
 
-        h.y + direction.y * 39
+        h.y
+        + direction.y * 39
         - direction.x * 5
 
     );
@@ -1834,10 +2021,10 @@ function drawSnake(){
 
 
 /* =====================================================
-   رسم بازی
+   رسم کل بازی
 ===================================================== */
 
-function draw(){
+function draw() {
 
     ctx.clearRect(
         0,
@@ -1857,22 +2044,20 @@ function draw(){
 
 
 /* =====================================================
-   Game Over
+   پایان بازی
 ===================================================== */
 
-function endGame(){
+function endGame() {
 
     gameOver = true;
 
 
-    document.getElementById(
-        "finalScore"
-    ).textContent = score;
+    document.getElementById("finalScore")
+        .textContent = score;
 
 
-    document.getElementById(
-        "gameOver"
-    ).classList.add("show");
+    document.getElementById("gameOver")
+        .classList.add("show");
 
 }
 
@@ -1881,15 +2066,15 @@ function endGame(){
    حلقه بازی
 ===================================================== */
 
-function loop(time){
+function loop(time) {
 
-    if(gameOver)
+    if (gameOver)
         return;
 
 
-    if(
+    if (
         time - lastTime >= SPEED
-    ){
+    ) {
 
         update();
 
@@ -1911,13 +2096,14 @@ function loop(time){
 
 document.addEventListener(
     "keydown",
-    function(e){
+    function(e) {
 
-        if(
+
+        if (
             e.key === "ArrowUp" ||
             e.key === "w" ||
             e.key === "W"
-        ){
+        ) {
 
             changeDirection("up");
 
@@ -1926,11 +2112,11 @@ document.addEventListener(
         }
 
 
-        if(
+        if (
             e.key === "ArrowDown" ||
             e.key === "s" ||
             e.key === "S"
-        ){
+        ) {
 
             changeDirection("down");
 
@@ -1939,11 +2125,11 @@ document.addEventListener(
         }
 
 
-        if(
+        if (
             e.key === "ArrowLeft" ||
             e.key === "a" ||
             e.key === "A"
-        ){
+        ) {
 
             changeDirection("left");
 
@@ -1952,11 +2138,11 @@ document.addEventListener(
         }
 
 
-        if(
+        if (
             e.key === "ArrowRight" ||
             e.key === "d" ||
             e.key === "D"
-        ){
+        ) {
 
             changeDirection("right");
 
@@ -1965,12 +2151,14 @@ document.addEventListener(
         }
 
 
-        /* Space = شروع دوباره */
+        /*
+            Space = شروع دوباره
+        */
 
-        if(
+        if (
             e.code === "Space" &&
             gameOver
-        ){
+        ) {
 
             restart();
 
@@ -1991,11 +2179,9 @@ let touchStartY = 0;
 
 document.addEventListener(
     "touchstart",
-    function(e){
+    function(e) {
 
-        if(
-            !e.touches.length
-        )
+        if (!e.touches.length)
             return;
 
 
@@ -2008,18 +2194,16 @@ document.addEventListener(
 
     },
     {
-        passive:true
+        passive: true
     }
 );
 
 
 document.addEventListener(
     "touchend",
-    function(e){
+    function(e) {
 
-        if(
-            !e.changedTouches.length
-        )
+        if (!e.changedTouches.length)
             return;
 
 
@@ -2042,38 +2226,41 @@ document.addEventListener(
         const minSwipe = 25;
 
 
-        if(
+        if (
             Math.abs(dx) < minSwipe &&
             Math.abs(dy) < minSwipe
-        ){
+        ) {
 
             return;
 
         }
 
 
-        if(
+        if (
             Math.abs(dx) >
             Math.abs(dy)
-        ){
+        ) {
 
-            if(dx > 0){
+
+            if (dx > 0) {
 
                 changeDirection("right");
 
-            }else{
+            } else {
 
                 changeDirection("left");
 
             }
 
-        }else{
 
-            if(dy > 0){
+        } else {
+
+
+            if (dy > 0) {
 
                 changeDirection("down");
 
-            }else{
+            } else {
 
                 changeDirection("up");
 
@@ -2083,13 +2270,13 @@ document.addEventListener(
 
     },
     {
-        passive:true
+        passive: true
     }
 );
 
 
 /* =====================================================
-   شروع اولیه
+   شروع اولیه بازی
 ===================================================== */
 
 restart();
