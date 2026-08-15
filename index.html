@@ -51,7 +51,6 @@ function update(){if(gameOver)return;if(bigApple && Date.now() >= bigAppleVisibl
 if(head.x<0)head.x=W;if(head.x>W)head.x=0;if(head.y<0)head.y=H;if(head.y>H)head.y=0;
 for(let i=1;i<snake.length;i++)if(Math.hypot(head.x-snake[i].x,head.y-snake[i].y)<17){endGame();return}
 snake.unshift(head);
-if(bigApple && Math.hypot(head.x-bigApple.x,head.y-bigApple.y)<28){
     score+=50;
     bigApple=null;
     document.getElementById("score").textContent=score;
