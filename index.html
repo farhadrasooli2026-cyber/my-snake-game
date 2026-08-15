@@ -51,6 +51,19 @@ for(let i=1;i<snake.length;i++)if(Math.hypot(head.x-snake[i].x,head.y-snake[i].y
 snake.unshift(head);
 if(Math.hypot(head.x-apple.x,head.y-apple.y)<28){score+=10;document.getElementById("score").textContent=score;if(score>best){best=score;localStorage.setItem("snakeBest",best);document.getElementById("best").textContent=best}if(speed>55)speed-=3;createApple()}else snake.pop()}
 function drawApple(){ctx.save();ctx.shadowColor="#ff2200";ctx.shadowBlur=20;ctx.fillStyle="#ff3020";ctx.beginPath();ctx.arc(apple.x-7,apple.y,13,0,Math.PI*2);ctx.arc(apple.x+7,apple.y,13,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(apple.x,apple.y+4,17,0,Math.PI*2);ctx.fill();ctx.shadowBlur=5;ctx.beginPath();ctx.ellipse(apple.x+9,apple.y-18,9,5,-.5,0,Math.PI*2);ctx.fillStyle="#55ff00";ctx.fill();ctx.beginPath();ctx.moveTo(apple.x,apple.y-12);ctx.lineTo(apple.x+2,apple.y-22);ctx.strokeStyle="#8b4513";ctx.lineWidth=4;ctx.stroke();ctx.restore()}
+  function drawBigApple(){
+    if(!bigApple)return;
+    ctx.save();
+    ctx.shadowColor="#ff0000";
+    ctx.shadowBlur=25;
+    ctx.fillStyle="#ff0000";
+    ctx.beginPath();
+    ctx.arc(bigApple.x,bigApple.y,20,0,Math.PI*2);
+    ctx.fill();
+    ctx.fillStyle="#00aa00";
+    ctx.fillRect(bigApple.x-3,bigApple.y-28,6,10);
+    ctx.restore();
+}
 function drawSnake(){if(snake.length<2)return;ctx.save();ctx.lineCap="round";ctx.lineJoin="round";ctx.beginPath();ctx.moveTo(snake[0].x,snake[0].y);for(let i=1;i<snake.length;i++)ctx.lineTo(snake[i].x,snake[i].y);ctx.strokeStyle="#4dff00";ctx.lineWidth=30;ctx.shadowColor="#52ff00";ctx.shadowBlur=22;ctx.stroke();ctx.beginPath();ctx.moveTo(snake[0].x,snake[0].y-3);for(let i=1;i<snake.length;i++)ctx.lineTo(snake[i].x,snake[i].y-3);ctx.strokeStyle="#9cff35";ctx.lineWidth=8;ctx.shadowBlur=5;ctx.stroke();
 let h=snake[0],sx=-direction.y*8,sy=direction.x*8,fx=direction.x*8,fy=direction.y*8,e1={x:h.x+fx+sx,y:h.y+fy+sy},e2={x:h.x+fx-sx,y:h.y+fy-sy};ctx.shadowColor="#7cff00";ctx.shadowBlur=25;ctx.beginPath();ctx.arc(h.x,h.y,20,0,Math.PI*2);ctx.fillStyle="#63ff00";ctx.fill();ctx.shadowBlur=3;ctx.fillStyle="black";ctx.beginPath();ctx.arc(e1.x,e1.y,5,0,Math.PI*2);ctx.arc(e2.x,e2.y,5,0,Math.PI*2);ctx.fill();
 ctx.beginPath();ctx.moveTo(h.x+direction.x*18,h.y+direction.y*18);ctx.lineTo(h.x+direction.x*30,h.y+direction.y*30);ctx.strokeStyle="#ff3030";ctx.lineWidth=2;ctx.stroke();ctx.beginPath();ctx.moveTo(h.x+direction.x*30,h.y+direction.y*30);ctx.lineTo(h.x+direction.x*36-direction.y*5,h.y+direction.y*36+direction.x*5);ctx.moveTo(h.x+direction.x*30,h.y+direction.y*30);ctx.lineTo(h.x+direction.x*36+direction.y*5,h.y+direction.y*36-direction.x*5);ctx.stroke();ctx.restore()}
