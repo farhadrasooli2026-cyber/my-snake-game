@@ -43,5 +43,38 @@ function loop(t){if(gameOver)return;if(t-lastTime>speed){update();draw();lastTim
 document.addEventListener("keydown",e=>{if(e.key==="ArrowUp"&&direction.y!==1)nextDirection={x:0,y:-1};if(e.key==="ArrowDown"&&direction.y!==-1)nextDirection={x:0,y:1};if(e.key==="ArrowLeft"&&direction.x!==1)nextDirection={x:-1,y:0};if(e.key==="ArrowRight"&&direction.x!==-1)nextDirection={x:1,y:0}});
 restart();
 </script>
+  <script>
+let touchStartX = 0;
+let touchStartY = 0;
+
+document.addEventListener("touchstart", function(e) {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+}, { passive: false });
+
+document.addEventListener("touchend", function(e) {
+    e.preventDefault();
+
+    let touchEndX = e.changedTouches[0].clientX;
+    let touchEndY = e.changedTouches[0].clientY;
+
+    let dx = touchEndX - touchStartX;
+    let dy = touchEndY - touchStartY;
+
+    if (Math.abs(dx) > Math.abs(dy)) {
+        if (dx > 20) {
+            document.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowRight" }));
+        } else if (dx < -20) {
+            document.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowLeft" }));
+        }
+    } else {
+        if (dy > 20) {
+            document.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowDown" }));
+        } else if (dy < -20) {
+            document.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowUp" }));
+        }
+    }
+}, { passive: false });
+</script>
 </body>
 </html>
