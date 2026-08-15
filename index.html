@@ -31,6 +31,7 @@ canvas{background:#020d03;border:2px solid #9cff00;border-radius:18px;box-shadow
 <script>
 const canvas=document.getElementById("game"),ctx=canvas.getContext("2d"),W=canvas.width,H=canvas.height;
 let snake,apple,direction,nextDirection,score,gameOver,speed,lastTime=0;
+  let bigApple=null,bigAppleNextTime=Date.now()+15000,bigAppleVisibleUntil=0;
 let best=Number(localStorage.getItem("snakeBest"))||0;document.getElementById("best").textContent=best;
 function restart(){snake=[];for(let i=0;i<7;i++)snake.push({x:380-i*22,y:300});direction={x:1,y:0};nextDirection={x:1,y:0};score=0;gameOver=false;speed=110;document.getElementById("score").textContent=0;createApple();lastTime=performance.now();requestAnimationFrame(loop)}
 function createApple(){apple={x:30+Math.random()*(W-60),y:30+Math.random()*(H-60)};for(const p of snake){if(Math.hypot(apple.x-p.x,apple.y-p.y)<45){createApple();return}}}
