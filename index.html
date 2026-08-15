@@ -73,6 +73,12 @@ function endGame(){gameOver=true;ctx.fillStyle="rgba(0,0,0,.65)";ctx.fillRect(0,
 function loop(t){if(gameOver)return;if(t-lastTime>speed){update();draw();lastTime=t}requestAnimationFrame(loop)}
 document.addEventListener("keydown",e=>{if(e.key==="ArrowUp"&&direction.y!==1)nextDirection={x:0,y:-1};if(e.key==="ArrowDown"&&direction.y!==-1)nextDirection={x:0,y:1};if(e.key==="ArrowLeft"&&direction.x!==1)nextDirection={x:-1,y:0};if(e.key==="ArrowRight"&&direction.x!==-1)nextDirection={x:1,y:0}});
 restart();
+  function changeDirection(dir){
+    if(dir==='up' && direction.y!==1) nextDirection={x:0,y:-1};
+    if(dir==='down' && direction.y!==-1) nextDirection={x:0,y:1};
+    if(dir==='left' && direction.x!==1) nextDirection={x:-1,y:0};
+    if(dir==='right' && direction.x!==-1) nextDirection={x:1,y:0};
+}
 </script>
   <script>
 let touchStartX = 0;
