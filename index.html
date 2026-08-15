@@ -1,74 +1,62 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-
 <head>
 <meta charset="UTF-8">
 
 <meta name="viewport"
-      content="width=device-width,
-      initial-scale=1.0,
-      maximum-scale=1.0,
-      user-scalable=no,
-      viewport-fit=cover">
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <title>Snake Game</title>
 
 <style>
-
-* {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
 }
 
-html,
-body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    min-height: 100%;
-    background: #020902;
-    font-family: Arial, sans-serif;
-    overflow-x: hidden;
-    touch-action: manipulation;
+html,body{
+    margin:0;
+    padding:0;
+    width:100%;
+    min-height:100%;
+    background:#020902;
+    color:#9cff00;
+    font-family:Arial,sans-serif;
+    overflow-x:hidden;
+    touch-action:manipulation;
 }
 
-body {
-    color: #9cff00;
+body{
+    display:flex;
+    justify-content:center;
 }
 
-.game {
-    width: 100%;
-    max-width: 1100px;
-    min-height: 100vh;
-    margin: auto;
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 18px;
+.game{
+    width:100%;
+    max-width:1100px;
+    min-height:100vh;
+    padding:8px;
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+    gap:18px;
 }
 
-/* =========================
-   قسمت بازی
-========================= */
-
-.game-area {
-    width: 760px;
-    max-width: 100%;
+.game-area{
+    width:760px;
+    max-width:100%;
+    position:relative;
 }
 
-canvas {
-    display: block;
-    width: 100%;
-    height: auto;
-
-    background: #020d03;
-
-    border: 2px solid #9cff00;
-    border-radius: 18px;
-
+canvas{
+    display:block;
+    width:100%;
+    height:auto;
+    background:#020d03;
+    border:2px solid #9cff00;
+    border-radius:18px;
     box-shadow:
-        0 0 15px #5aff00,
+        0 0 18px #5aff00,
         0 0 35px rgba(90,255,0,.35);
 }
 
@@ -76,98 +64,79 @@ canvas {
    کنترل گرد
 ========================= */
 
-.controls {
-    width: 190px;
-    height: 190px;
-    margin: 12px auto 5px;
-    position: relative;
-    display: none;
+.controls{
+    width:190px;
+    height:190px;
+    margin:12px auto 5px;
+    position:relative;
+    display:none;
 }
 
-.control-ring {
-    position: absolute;
-    width: 184px;
-    height: 184px;
-
-    left: 3px;
-    top: 3px;
-
-    border: 2px solid #9cff00;
-    border-radius: 50%;
-
+.control-ring{
+    position:absolute;
+    width:184px;
+    height:184px;
+    left:3px;
+    top:3px;
+    border:2px solid #9cff00;
+    border-radius:50%;
     box-shadow:
         0 0 18px rgba(100,255,0,.5),
         inset 0 0 18px rgba(100,255,0,.2);
 }
 
-.control {
-    position: absolute;
-
-    width: 58px;
-    height: 58px;
-
-    border-radius: 50%;
-
-    border: 2px solid #9cff00;
-
-    background: #031a05;
-
-    color: white;
-
-    font-size: 27px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    z-index: 5;
-
-    box-shadow:
-        0 0 12px rgba(100,255,0,.5);
-
-    user-select: none;
-    touch-action: manipulation;
+.control{
+    position:absolute;
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    border:2px solid #9cff00;
+    background:#031a05;
+    color:white;
+    font-size:27px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:5;
+    box-shadow:0 0 12px rgba(100,255,0,.5);
+    user-select:none;
+    touch-action:manipulation;
 }
 
-.control:active {
-    background: #58ff00;
-    color: #000;
-    transform: scale(.94);
+.control:active{
+    background:#58ff00;
+    color:#000;
+    transform:scale(.94);
 }
 
-.up {
-    top: 7px;
-    left: 66px;
+.up{
+    top:7px;
+    left:66px;
 }
 
-.down {
-    bottom: 7px;
-    left: 66px;
+.down{
+    bottom:7px;
+    left:66px;
 }
 
-.left {
-    left: 7px;
-    top: 66px;
+.left{
+    left:7px;
+    top:66px;
 }
 
-.right {
-    right: 7px;
-    top: 66px;
+.right{
+    right:7px;
+    top:66px;
 }
 
-.center {
-    position: absolute;
-
-    width: 48px;
-    height: 48px;
-
-    left: 71px;
-    top: 71px;
-
-    border-radius: 50%;
-
-    background: #50ff00;
-
+.center{
+    position:absolute;
+    width:46px;
+    height:46px;
+    left:72px;
+    top:72px;
+    border-radius:50%;
+    background:#50ff00;
     box-shadow:
         0 0 20px #50ff00,
         0 0 40px rgba(80,255,0,.5);
@@ -177,345 +146,256 @@ canvas {
    پنل
 ========================= */
 
-.panel {
-    width: 260px;
-    flex-shrink: 0;
+.panel{
+    width:260px;
+    flex-shrink:0;
 }
 
-h1 {
-    margin: 5px 0 18px;
-
-    text-align: center;
-
-    direction: ltr;
-
-    font-size: 38px;
-
-    color: #9cff00;
-
+h1{
+    margin:5px 0 18px;
+    text-align:center;
+    direction:ltr;
+    font-size:38px;
+    color:#9cff00;
     text-shadow:
         0 0 10px #76ff00,
         0 0 25px #4dff00;
 }
 
-.box {
-    border: 1px solid #5eff00;
-
-    border-radius: 15px;
-
-    padding: 16px;
-
-    margin-bottom: 12px;
-
-    text-align: center;
-
-    background: rgba(0,20,0,.55);
-
-    box-shadow:
-        0 0 10px rgba(80,255,0,.15);
+.box{
+    border:1px solid #5eff00;
+    border-radius:15px;
+    padding:16px;
+    margin-bottom:12px;
+    text-align:center;
+    background:rgba(0,20,0,.55);
+    box-shadow:0 0 10px rgba(80,255,0,.15);
 }
 
-.label {
-    color: #fff3a0;
-    font-size: 19px;
+.label{
+    color:#fff3a0;
+    font-size:19px;
 }
 
-.value {
-    margin-top: 5px;
-    font-size: 30px;
-    direction: ltr;
+.value{
+    margin-top:5px;
+    font-size:30px;
+    direction:ltr;
 }
 
-.restart {
-    width: 100%;
-
-    padding: 14px;
-
-    border-radius: 12px;
-
-    border: 2px solid #9cff00;
-
-    background: transparent;
-
-    color: #9cff00;
-
-    font-size: 19px;
-
-    cursor: pointer;
+.restart{
+    width:100%;
+    padding:14px;
+    border-radius:12px;
+    border:2px solid #9cff00;
+    background:transparent;
+    color:#9cff00;
+    font-size:19px;
+    cursor:pointer;
 }
 
-.restart:active {
-    background: #9cff00;
-    color: #000;
+.restart:active{
+    background:#9cff00;
+    color:#000;
 }
 
 /* =========================
    Game Over
 ========================= */
 
-.game-over {
-    position: absolute;
-
-    inset: 0;
-
-    border-radius: 18px;
-
-    background: rgba(0,0,0,.78);
-
-    display: none;
-
-    justify-content: center;
-    align-items: center;
-
-    flex-direction: column;
-
-    z-index: 20;
+.game-over{
+    position:absolute;
+    inset:0;
+    border-radius:18px;
+    background:rgba(0,0,0,.78);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    z-index:20;
 }
 
-.game-over.show {
-    display: flex;
+.game-over.show{
+    display:flex;
 }
 
-.game-over h2 {
-    margin: 0;
-
-    direction: ltr;
-
-    color: #ff3030;
-
-    font-size: 48px;
-
+.game-over h2{
+    margin:0;
+    direction:ltr;
+    color:#ff3030;
+    font-size:48px;
     text-shadow:
         0 0 15px red,
         0 0 30px red;
 }
 
-.game-over p {
-    color: white;
-    font-size: 21px;
+.game-over p{
+    color:white;
+    font-size:21px;
 }
 
-.game-over button {
-    padding: 12px 25px;
-
-    border-radius: 10px;
-
-    border: 2px solid #9cff00;
-
-    background: transparent;
-
-    color: #9cff00;
-
-    font-size: 18px;
+.game-over button{
+    padding:12px 25px;
+    border-radius:10px;
+    border:2px solid #9cff00;
+    background:transparent;
+    color:#9cff00;
+    font-size:18px;
 }
 
 /* =========================
    موبایل
 ========================= */
 
-@media (max-width: 900px) {
+@media(max-width:900px){
 
-    body {
-        width: 100%;
+    .game{
+        width:100%;
+        min-height:100vh;
+        padding:5px;
+        display:block;
     }
 
-    .game {
-        width: 100%;
-        min-height: 100vh;
-
-        padding: 5px;
-
-        display: block;
+    .game-area{
+        width:100%;
     }
 
-    .game-area {
-        width: 100%;
+    canvas{
+        width:100%;
+        max-width:100%;
     }
 
-    canvas {
-        width: 100%;
-        max-width: 100%;
+    .controls{
+        display:block;
     }
 
-    .controls {
-        display: block;
+    .panel{
+        width:100%;
+        display:flex;
+        flex-wrap:wrap;
+        gap:7px;
     }
 
-    .panel {
-        width: 100%;
-
-        display: flex;
-        flex-wrap: wrap;
-
-        gap: 7px;
+    h1{
+        width:100%;
+        order:1;
+        margin:0 0 2px;
+        font-size:30px;
     }
 
-    h1 {
-        width: 100%;
-
-        order: 1;
-
-        margin: 0 0 2px;
-
-        font-size: 30px;
+    .box{
+        width:calc(50% - 4px);
+        margin:0;
+        padding:9px 4px;
+        order:2;
     }
 
-    .box {
-        width: calc(50% - 4px);
-
-        margin: 0;
-
-        padding: 9px 4px;
-
-        order: 2;
+    .label{
+        font-size:16px;
     }
 
-    .label {
-        font-size: 16px;
+    .value{
+        font-size:28px;
     }
 
-    .value {
-        font-size: 28px;
-    }
-
-    .restart {
-        order: 3;
-
-        width: 100%;
-
-        margin-top: 1px;
+    .restart{
+        order:3;
+        width:100%;
+        margin-top:1px;
     }
 }
 
-/* =========================
-   گوشی کوچک
-========================= */
+@media(max-width:420px){
 
-@media (max-width: 420px) {
-
-    .controls {
-        width: 175px;
-        height: 175px;
-        margin-top: 8px;
+    .controls{
+        width:175px;
+        height:175px;
     }
 
-    .control-ring {
-        width: 170px;
-        height: 170px;
+    .control-ring{
+        width:170px;
+        height:170px;
     }
 
-    .control {
-        width: 53px;
-        height: 53px;
-        font-size: 24px;
+    .control{
+        width:53px;
+        height:53px;
+        font-size:24px;
     }
 
-    .up {
-        top: 7px;
-        left: 61px;
+    .up{
+        top:7px;
+        left:61px;
     }
 
-    .down {
-        bottom: 7px;
-        left: 61px;
+    .down{
+        bottom:7px;
+        left:61px;
     }
 
-    .left {
-        left: 7px;
-        top: 61px;
+    .left{
+        left:7px;
+        top:61px;
     }
 
-    .right {
-        right: 7px;
-        top: 61px;
+    .right{
+        right:7px;
+        top:61px;
     }
 
-    .center {
-        width: 44px;
-        height: 44px;
-
-        left: 65px;
-        top: 65px;
+    .center{
+        width:44px;
+        height:44px;
+        left:65px;
+        top:65px;
     }
 
-    h1 {
-        font-size: 27px;
+    h1{
+        font-size:27px;
     }
 
-    .label {
-        font-size: 15px;
+    .label{
+        font-size:15px;
     }
 
-    .value {
-        font-size: 25px;
+    .value{
+        font-size:25px;
     }
 }
-
 </style>
 </head>
-
 
 <body>
 
 <div class="game">
 
-    <!-- =========================
-         بازی
-    ========================== -->
-
     <div class="game-area">
 
-        <canvas
-            id="game"
-            width="760"
-            height="600">
-        </canvas>
+        <canvas id="game" width="760" height="600"></canvas>
 
-
-        <!-- =========================
-             کنترل گرد
-        ========================== -->
-
+        <!-- کنترل چهارجهته گرد -->
         <div class="controls">
 
             <div class="control-ring"></div>
 
-            <button
-                class="control up"
-                onclick="changeDirection('up')">
-                ⬆️
-            </button>
+            <button class="control up"
+                    onclick="changeDirection('up')">⬆️</button>
 
-            <button
-                class="control left"
-                onclick="changeDirection('left')">
-                ⬅️
-            </button>
+            <button class="control left"
+                    onclick="changeDirection('left')">⬅️</button>
 
-            <button
-                class="control right"
-                onclick="changeDirection('right')">
-                ➡️
-            </button>
+            <button class="control right"
+                    onclick="changeDirection('right')">➡️</button>
 
-            <button
-                class="control down"
-                onclick="changeDirection('down')">
-                ⬇️
-            </button>
+            <button class="control down"
+                    onclick="changeDirection('down')">⬇️</button>
 
             <div class="center"></div>
 
         </div>
 
-
-        <!-- =========================
-             Game Over
-        ========================== -->
-
-        <div
-            id="gameOver"
-            class="game-over">
+        <!-- پایان بازی -->
+        <div id="gameOver" class="game-over">
 
             <h2>GAME OVER</h2>
 
@@ -532,51 +412,23 @@ h1 {
 
     </div>
 
-
-    <!-- =========================
-         پنل امتیاز
-    ========================== -->
-
+    <!-- پنل -->
     <div class="panel">
 
         <h1>🐍 SNAKE</h1>
 
         <div class="box">
-
-            <div class="label">
-                امتیاز
-            </div>
-
-            <div
-                id="score"
-                class="value">
-                0
-            </div>
-
+            <div class="label">امتیاز</div>
+            <div id="score" class="value">0</div>
         </div>
-
 
         <div class="box">
-
-            <div class="label">
-                بهترین امتیاز
-            </div>
-
-            <div
-                id="best"
-                class="value">
-                0
-            </div>
-
+            <div class="label">بهترین امتیاز</div>
+            <div id="best" class="value">0</div>
         </div>
 
-
-        <button
-            class="restart"
-            onclick="restart()">
-
+        <button class="restart" onclick="restart()">
             🔄 شروع دوباره
-
         </button>
 
     </div>
@@ -597,28 +449,25 @@ const W = canvas.width;
 const H = canvas.height;
 
 const GRID = 22;
-
 const SPEED = 110;
 
 
 /* =====================================================
-   متغیرها
+   متغیرهای بازی
 ===================================================== */
 
 let snake = [];
-
 let apple = null;
-
 let bigApple = null;
 
 let direction = {
-    x: 1,
-    y: 0
+    x:1,
+    y:0
 };
 
 let nextDirection = {
-    x: 1,
-    y: 0
+    x:1,
+    y:0
 };
 
 let score = 0;
@@ -631,9 +480,7 @@ let gameOver = false;
 let lastTime = 0;
 
 
-/* =====================================================
-   زمان سیب بزرگ
-===================================================== */
+/* سیب بزرگ */
 
 let bigAppleNextTime =
     Date.now() + 15000;
@@ -641,46 +488,39 @@ let bigAppleNextTime =
 let bigAppleVisibleUntil = 0;
 
 
-/* =====================================================
-   نمایش بهترین امتیاز
-===================================================== */
+/* نمایش بهترین امتیاز */
 
 document.getElementById("best").textContent = best;
 
 
 /* =====================================================
-   شروع بازی
+   شروع دوباره
 ===================================================== */
 
-function restart() {
+function restart(){
 
     snake = [];
 
-    /*
-       طول اولیه مار
-    */
+    /* طول اولیه مار */
 
-    for (let i = 0; i < 7; i++) {
+    for(let i=0;i<7;i++){
 
         snake.push({
-            x: 380 - i * GRID,
-            y: 300
+            x:380-i*GRID,
+            y:300
         });
 
     }
 
-
     direction = {
-        x: 1,
-        y: 0
+        x:1,
+        y:0
     };
-
 
     nextDirection = {
-        x: 1,
-        y: 0
+        x:1,
+        y:0
     };
-
 
     score = 0;
 
@@ -688,130 +528,110 @@ function restart() {
 
     bigApple = null;
 
-
     bigAppleNextTime =
-        Date.now() + 15000;
-
+        Date.now()+15000;
 
     bigAppleVisibleUntil = 0;
-
 
     document.getElementById("score")
         .textContent = "0";
 
-
     document.getElementById("finalScore")
         .textContent = "0";
-
 
     document.getElementById("gameOver")
         .classList.remove("show");
 
-
     createApple();
-
 
     draw();
 
-
     lastTime = performance.now();
-
 
     requestAnimationFrame(loop);
 }
 
 
 /* =====================================================
-   ساخت سیب معمولی
+   سیب معمولی
 ===================================================== */
 
-function createApple() {
+function createApple(){
 
-    let attempts = 0;
+    let attempts=0;
 
-    do {
+    do{
 
-        apple = {
-
+        apple={
             x:
                 Math.floor(
-                    Math.random() *
-                    (W / GRID)
-                ) * GRID,
+                    Math.random()*(W/GRID)
+                )*GRID,
 
             y:
                 Math.floor(
-                    Math.random() *
-                    (H / GRID)
-                ) * GRID
+                    Math.random()*(H/GRID)
+                )*GRID
         };
 
         attempts++;
 
-    } while (
+    }while(
 
-        snake.some(function(p) {
-
-            return Math.hypot(
-                apple.x - p.x,
-                apple.y - p.y
-            ) < 35;
-
-        })
-
-        && attempts < 100
+        snake.some(p =>
+            Math.hypot(
+                apple.x-p.x,
+                apple.y-p.y
+            )<35
+        )
+        &&
+        attempts<100
     );
 }
 
 
 /* =====================================================
-   ساخت سیب بزرگ
+   سیب بزرگ
 ===================================================== */
 
-function createBigApple() {
+function createBigApple(){
 
-    let attempts = 0;
+    let attempts=0;
 
-    do {
+    do{
 
-        bigApple = {
+        bigApple={
 
             x:
                 Math.floor(
-                    Math.random() *
-                    (W / GRID)
-                ) * GRID,
+                    Math.random()*(W/GRID)
+                )*GRID,
 
             y:
                 Math.floor(
-                    Math.random() *
-                    (H / GRID)
-                ) * GRID
+                    Math.random()*(H/GRID)
+                )*GRID
+
         };
 
         attempts++;
 
-    } while (
+    }while(
 
-        snake.some(function(p) {
-
-            return Math.hypot(
-                bigApple.x - p.x,
-                bigApple.y - p.y
-            ) < 45;
-
-        })
-
-        && attempts < 100
+        snake.some(p =>
+            Math.hypot(
+                bigApple.x-p.x,
+                bigApple.y-p.y
+            )<45
+        )
+        &&
+        attempts<100
     );
 
-
-    /*
-       سیب بزرگ 4 ثانیه باقی می‌ماند
-    */
+    /* فقط 4 ثانیه دیده می‌شود */
 
     bigAppleVisibleUntil =
-        Date.now() + 4000;
+        Date.now()+4000;
 }
 
 
@@ -819,52 +639,49 @@ function createBigApple() {
    تغییر جهت
 ===================================================== */
 
-function changeDirection(dir) {
+function changeDirection(dir){
 
-    if (
-        dir === "up" &&
-        direction.y !== 1
-    ) {
+    if(
+        dir==="up" &&
+        direction.y!==1
+    ){
 
-        nextDirection = {
-            x: 0,
-            y: -1
+        nextDirection={
+            x:0,
+            y:-1
         };
     }
 
+    if(
+        dir==="down" &&
+        direction.y!==-1
+    ){
 
-    if (
-        dir === "down" &&
-        direction.y !== -1
-    ) {
-
-        nextDirection = {
-            x: 0,
-            y: 1
+        nextDirection={
+            x:0,
+            y:1
         };
     }
 
+    if(
+        dir==="left" &&
+        direction.x!==1
+    ){
 
-    if (
-        dir === "left" &&
-        direction.x !== 1
-    ) {
-
-        nextDirection = {
-            x: -1,
-            y: 0
+        nextDirection={
+            x:-1,
+            y:0
         };
     }
 
+    if(
+        dir==="right" &&
+        direction.x!==-1
+    ){
 
-    if (
-        dir === "right" &&
-        direction.x !== -1
-    ) {
-
-        nextDirection = {
-            x: 1,
-            y: 0
+        nextDirection={
+            x:1,
+            y:0
         };
     }
 }
@@ -874,66 +691,57 @@ function changeDirection(dir) {
    آپدیت بازی
 ===================================================== */
 
-function update() {
+function update(){
 
-    if (gameOver) return;
+    if(gameOver) return;
+
+    const now=Date.now();
 
 
-    const now = Date.now();
+    /* حذف سیب بزرگ */
 
-
-    /* -------------------------
-       حذف سیب بزرگ
-    ------------------------- */
-
-    if (
+    if(
         bigApple &&
-        now >= bigAppleVisibleUntil
-    ) {
+        now>=bigAppleVisibleUntil
+    ){
 
-        bigApple = null;
+        bigApple=null;
     }
 
 
-    /* -------------------------
-       ایجاد سیب بزرگ هر 15 ثانیه
-    ------------------------- */
+    /* هر 15 ثانیه */
 
-    if (
+    if(
         !bigApple &&
-        now >= bigAppleNextTime
-    ) {
+        now>=bigAppleNextTime
+    ){
 
         createBigApple();
 
         bigAppleNextTime =
-            now + 15000;
+            now+15000;
     }
 
 
-    /* -------------------------
-       جهت جدید
-    ------------------------- */
+    /* جهت */
 
-    direction = {
-        x: nextDirection.x,
-        y: nextDirection.y
+    direction={
+        x:nextDirection.x,
+        y:nextDirection.y
     };
 
 
-    /* -------------------------
-       سر جدید
-    ------------------------- */
+    /* سر جدید */
 
-    let head = {
+    let head={
 
         x:
-            snake[0].x +
-            direction.x * GRID,
+            snake[0].x+
+            direction.x*GRID,
 
         y:
-            snake[0].y +
-            direction.y * GRID
+            snake[0].y+
+            direction.y*GRID
 
     };
 
@@ -942,77 +750,64 @@ function update() {
        عبور از دیوار
     ================================================= */
 
-    if (head.x < 0) {
-        head.x = W - GRID;
-    }
+    if(head.x<0)
+        head.x=W-GRID;
 
-    if (head.x >= W) {
-        head.x = 0;
-    }
+    if(head.x>=W)
+        head.x=0;
 
-    if (head.y < 0) {
-        head.y = H - GRID;
-    }
+    if(head.y<0)
+        head.y=H-GRID;
 
-    if (head.y >= H) {
-        head.y = 0;
-    }
+    if(head.y>=H)
+        head.y=0;
 
 
     /* =================================================
        برخورد با بدن خودش
     ================================================= */
 
-    for (
-        let i = 1;
-        i < snake.length;
+    for(
+        let i=1;
+        i<snake.length;
         i++
-    ) {
+    ){
 
-        if (
-
+        if(
             Math.hypot(
-                head.x - snake[i].x,
-                head.y - snake[i].y
-            ) < 17
-
-        ) {
+                head.x-snake[i].x,
+                head.y-snake[i].y
+            )<17
+        ){
 
             endGame();
-
             return;
         }
     }
 
 
-    /* =================================================
-       اضافه شدن سر
-    ================================================= */
+    /* سر اضافه می‌شود */
 
     snake.unshift(head);
 
-
-    let ateApple = false;
+    let ateApple=false;
 
 
     /* =================================================
        خوردن سیب معمولی
     ================================================= */
 
-    if (
-
+    if(
         apple &&
-
         Math.hypot(
-            head.x - apple.x,
-            head.y - apple.y
-        ) < 28
+            head.x-apple.x,
+            head.y-apple.y
+        )<28
+    ){
 
-    ) {
+        score+=10;
 
-        score += 10;
-
-        ateApple = true;
+        ateApple=true;
 
         createApple();
     }
@@ -1022,44 +817,35 @@ function update() {
        خوردن سیب بزرگ
     ================================================= */
 
-    if (
-
+    if(
         bigApple &&
-
         Math.hypot(
-            head.x - bigApple.x,
-            head.y - bigApple.y
-        ) < 34
+            head.x-bigApple.x,
+            head.y-bigApple.y
+        )<34
+    ){
 
-    ) {
+        score+=50;
 
-        score += 50;
+        ateApple=true;
 
-        ateApple = true;
-
-        bigApple = null;
+        bigApple=null;
     }
 
 
-    /* =================================================
-       اگر سیب نخورده، دم حذف شود
-       اگر سیب خورده، دم حذف نمی‌شود
-       پس مار بزرگ می‌شود.
-    ================================================= */
+    /* اگر چیزی نخورد دم حذف می‌شود */
 
-    if (!ateApple) {
+    if(!ateApple){
 
         snake.pop();
     }
 
 
-    /* =================================================
-       بهترین امتیاز
-    ================================================= */
+    /* بهترین امتیاز */
 
-    if (score > best) {
+    if(score>best){
 
-        best = score;
+        best=score;
 
         localStorage.setItem(
             "snakeBest",
@@ -1067,90 +853,83 @@ function update() {
         );
 
         document.getElementById("best")
-            .textContent = best;
+            .textContent=best;
     }
 
 
     document.getElementById("score")
-        .textContent = score;
+        .textContent=score;
 }
 
 
 /* =====================================================
-   رسم سیب معمولی
+   سیب معمولی
 ===================================================== */
 
-function drawApple() {
+function drawApple(){
 
-    if (!apple) return;
-
+    if(!apple) return;
 
     ctx.save();
 
+    ctx.shadowColor="#ff2200";
+    ctx.shadowBlur=20;
 
-    ctx.shadowColor = "#ff2200";
+    ctx.fillStyle="#ff3020";
 
-    ctx.shadowBlur = 20;
-
-    ctx.fillStyle = "#ff3020";
-
-
-    /* بدنه سیب */
+    /* بدنه */
 
     ctx.beginPath();
 
     ctx.arc(
-        apple.x - 7,
+        apple.x-7,
         apple.y,
         13,
         0,
-        Math.PI * 2
+        Math.PI*2
     );
 
     ctx.arc(
-        apple.x + 7,
+        apple.x+7,
         apple.y,
         13,
         0,
-        Math.PI * 2
+        Math.PI*2
     );
 
     ctx.fill();
-
 
     ctx.beginPath();
 
     ctx.arc(
         apple.x,
-        apple.y + 4,
+        apple.y+4,
         17,
         0,
-        Math.PI * 2
+        Math.PI*2
     );
 
     ctx.fill();
 
-
     /* برگ */
 
-    ctx.shadowBlur = 5;
+    ctx.shadowBlur=5;
 
     ctx.beginPath();
 
     ctx.ellipse(
-        apple.x + 9,
-        apple.y - 18,
+        apple.x+9,
+        apple.y-18,
         9,
         5,
-        -0.5,
+        -.5,
         0,
-        Math.PI * 2
+        Math.PI*2
     );
 
-    ctx.fillStyle = "#55ff00";
+    ctx.fillStyle="#55ff00";
 
     ctx.fill();
-
 
     /* ساقه */
 
@@ -1158,73 +937,63 @@ function drawApple() {
 
     ctx.moveTo(
         apple.x,
-        apple.y - 12
+        apple.y-12
     );
 
     ctx.lineTo(
-        apple.x + 2,
-        apple.y - 22
+        apple.x+2,
+        apple.y-22
     );
 
-    ctx.strokeStyle = "#8b4513";
+    ctx.strokeStyle="#8b4513";
 
-    ctx.lineWidth = 4;
+    ctx.lineWidth=4;
 
     ctx.stroke();
-
 
     ctx.restore();
 }
 
 
 /* =====================================================
-   رسم سیب بزرگ
+   سیب بزرگ
 ===================================================== */
 
-function drawBigApple() {
+function drawBigApple(){
 
-    if (!bigApple) return;
-
+    if(!bigApple) return;
 
     ctx.save();
 
+    ctx.shadowColor="#ff0000";
+    ctx.shadowBlur=30;
 
-    ctx.shadowColor = "#ff0000";
-
-    ctx.shadowBlur = 30;
-
-
-    const gradient =
+    const gradient=
         ctx.createRadialGradient(
-
-            bigApple.x - 8,
-            bigApple.y - 8,
+            bigApple.x-8,
+            bigApple.y-8,
             3,
-
             bigApple.x,
             bigApple.y,
-            30
+            32
         );
-
 
     gradient.addColorStop(
         0,
-        "#ff7777"
+        "#ff8888"
     );
 
     gradient.addColorStop(
-        0.4,
+        .45,
         "#ff2222"
     );
 
     gradient.addColorStop(
         1,
-        "#a90000"
+        "#990000"
     );
 
-
-    ctx.fillStyle = gradient;
-
+    ctx.fillStyle=gradient;
 
     ctx.beginPath();
 
@@ -1233,58 +1002,523 @@ function drawBigApple() {
         bigApple.y,
         26,
         0,
-        Math.PI * 2
+        Math.PI*2
     );
 
     ctx.fill();
 
-
     /* ساقه */
 
-    ctx.shadowBlur = 5;
+    ctx.shadowBlur=5;
 
-    ctx.fillStyle = "#00ff00";
+    ctx.fillStyle="#00ff00";
 
     ctx.fillRect(
-        bigApple.x - 3,
-        bigApple.y - 35,
+        bigApple.x-3,
+        bigApple.y-35,
         6,
         12
     );
-
 
     /* برگ */
 
     ctx.beginPath();
 
     ctx.ellipse(
-        bigApple.x + 10,
-        bigApple.y - 31,
+        bigApple.x+10,
+        bigApple.y-31,
         9,
         5,
-        -0.4,
+        -.4,
         0,
-        Math.PI * 2
+        Math.PI*2
     );
 
     ctx.fill();
 
+    /* برق */
 
-    /* برق روی سیب */
-
-    ctx.fillStyle = "#ffffff";
+    ctx.fillStyle="#fff";
 
     ctx.beginPath();
 
     ctx.arc(
-        bigApple.x - 8,
-        bigApple.y - 9,
+        bigApple.x-8,
+        bigApple.y-9,
         4,
         0,
-        Math.PI * 2
+        Math.PI*2
     );
 
     ctx.fill();
+
+    ctx.restore();
+}
+
+
+/* =====================================================
+   مسیر بدن مار
+===================================================== */
+
+function drawSnakeBody(){
+
+    if(snake.length<2) return;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        snake[0].x,
+        snake[0].y
+    );
+
+
+    for(
+        let i=1;
+        i<snake.length;
+        i++
+    ){
+
+        const p=snake[i-1];
+        const c=snake[i];
+
+        const dx=Math.abs(c.x-p.x);
+        const dy=Math.abs(c.y-p.y);
+
+
+        /*
+           اگر فاصله زیاد باشد،
+           یعنی مار از دیوار عبور کرده.
+           بنابراین خط را قطع می‌کنیم.
+        */
+
+        if(
+            dx>GRID*1.5 ||
+            dy>GRID*1.5
+        ){
+
+            ctx.moveTo(
+                c.x,
+                c.y
+            );
+
+        }else{
+
+            ctx.lineTo(
+                c.x,
+                c.y
+            );
+        }
+    }
+}
+
+
+/* =====================================================
+   بدن مار
+===================================================== */
+
+function drawBody(){
+
+    drawSnakeBody();
+
+    /* مشکی */
+
+    ctx.strokeStyle="#050505";
+
+    ctx.lineWidth=32;
+
+    ctx.lineCap="round";
+
+    ctx.lineJoin="round";
+
+    ctx.shadowColor="#000";
+
+    ctx.shadowBlur=14;
+
+    ctx.stroke();
+
+
+    /* سبز */
+
+    drawSnakeBody();
+
+    ctx.strokeStyle="#39ff00";
+
+    ctx.lineWidth=25;
+
+    ctx.shadowColor="#39ff00";
+
+    ctx.shadowBlur=16;
+
+    ctx.stroke();
+
+
+    /* سبز روشن وسط */
+
+    drawSnakeBody();
+
+    ctx.strokeStyle="#9cff35";
+
+    ctx.lineWidth=7;
+
+    ctx.shadowBlur=5;
+
+    ctx.stroke();
+}
+
+
+/* =====================================================
+   سر واقعی‌تر مار
+===================================================== */
+
+function drawHead(){
+
+    if(!snake.length) return;
+
+    const h=snake[0];
+
+
+    /*
+       زاویه سر بر اساس جهت حرکت
+    */
+
+    const angle=
+        Math.atan2(
+            direction.y,
+            direction.x
+        );
+
+
+    ctx.save();
+
+    ctx.translate(h.x,h.y);
+
+    ctx.rotate(angle);
+
+
+    /* =================================================
+       سایه زیر سر
+    ================================================= */
+
+    ctx.shadowColor="rgba(0,0,0,.9)";
+    ctx.shadowBlur=15;
+
+
+    /*
+       سر فقط کمی از بدن پهن‌تر است.
+       بدن حدود 25px
+       سر حدود 29px
+    */
+
+    const headWidth=29;
+    const headLength=38;
+
+
+    /* =================================================
+       فرم اصلی سر
+    ================================================= */
+
+    const headGradient=
+        ctx.createLinearGradient(
+            -10,
+            -headWidth,
+            20,
+            headWidth
+        );
+
+    headGradient.addColorStop(
+        0,
+        "#123b12"
+    );
+
+    headGradient.addColorStop(
+        .35,
+        "#45e82d"
+    );
+
+    headGradient.addColorStop(
+        .7,
+        "#25b51d"
+    );
+
+    headGradient.addColorStop(
+        1,
+        "#092309"
+    );
+
+
+    ctx.fillStyle=headGradient;
+
+
+    ctx.beginPath();
+
+    /*
+       پشت سر
+    */
+
+    ctx.moveTo(-10,-14);
+
+
+    /*
+       قسمت بالایی سر
+    */
+
+    ctx.bezierCurveTo(
+        2,-16,
+        20,-13,
+        25,-7
+    );
+
+
+    /*
+       پوزه
+    */
+
+    ctx.bezierCurveTo(
+        30,-3,
+        30,3,
+        25,7
+    );
+
+
+    /*
+       پایین سر
+    */
+
+    ctx.bezierCurveTo(
+        20,13,
+        2,16,
+        -10,14
+    );
+
+
+    /*
+       اتصال به گردن
+    */
+
+    ctx.bezierCurveTo(
+        -17,8,
+        -17,-8,
+        -10,-14
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /* =================================================
+       فلس و خط وسط سر
+    ================================================= */
+
+    ctx.shadowBlur=0;
+
+    ctx.strokeStyle="rgba(180,255,100,.45)";
+
+    ctx.lineWidth=1.5;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -7,
+        0
+    );
+
+    ctx.quadraticCurveTo(
+        8,
+        -5,
+        23,
+        0
+    );
+
+    ctx.stroke();
+
+
+    /* =================================================
+       چشم‌ها
+    ================================================= */
+
+    const eyeY=8;
+
+    /* چشم بالا */
+
+    ctx.fillStyle="#dfffbc";
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        8,
+        -eyeY,
+        5,
+        4,
+        0,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /* مردمک */
+
+    ctx.fillStyle="#020202";
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        10,
+        -eyeY,
+        2,
+        3,
+        0,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /* چشم پایین */
+
+    ctx.fillStyle="#dfffbc";
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        8,
+        eyeY,
+        5,
+        4,
+        0,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /* مردمک */
+
+    ctx.fillStyle="#020202";
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        10,
+        eyeY,
+        2,
+        3,
+        0,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /* =================================================
+       سوراخ‌های بینی
+    ================================================= */
+
+    ctx.fillStyle="#001500";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        23,
+        -4,
+        1.8,
+        0,
+        Math.PI*2
+    );
+
+    ctx.arc(
+        23,
+        4,
+        1.8,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /* =================================================
+       دهان
+    ================================================= */
+
+    ctx.strokeStyle="#061506";
+
+    ctx.lineWidth=1.5;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        22,
+        -7
+    );
+
+    ctx.quadraticCurveTo(
+        16,
+        0,
+        22,
+        7
+    );
+
+    ctx.stroke();
+
+
+    /* =================================================
+       زبان دوشاخه
+    ================================================= */
+
+    ctx.strokeStyle="#ff3030";
+
+    ctx.lineWidth=1.5;
+
+    ctx.shadowColor="#ff0000";
+
+    ctx.shadowBlur=5;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        23,
+        0
+    );
+
+    ctx.lineTo(
+        35,
+        0
+    );
+
+    ctx.stroke();
+
+
+    /* شاخه اول */
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        34,
+        0
+    );
+
+    ctx.lineTo(
+        39,
+        -3
+    );
+
+    ctx.moveTo(
+        34,
+        0
+    );
+
+    ctx.lineTo(
+        39,
+        3
+    );
+
+    ctx.stroke();
 
 
     ctx.restore();
@@ -1293,321 +1527,23 @@ function drawBigApple() {
 
 /* =====================================================
    رسم مار
-   ⚫ مشکی
-   🟢 سبز
-   🔴 قرمز
 ===================================================== */
 
-function drawSnake() {
+function drawSnake(){
 
-    if (!snake.length) return;
+    if(!snake.length) return;
 
+    drawBody();
 
-    ctx.save();
-
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
-
-
-    /* =================================================
-       مسیر بدن
-       در محل عبور از دیوار خط نمی‌کشیم
-    ================================================= */
-
-    function drawSnakePath(offsetY) {
-
-        ctx.beginPath();
-
-        ctx.moveTo(
-            snake[0].x,
-            snake[0].y + offsetY
-        );
-
-
-        for (
-            let i = 1;
-            i < snake.length;
-            i++
-        ) {
-
-            const previous = snake[i - 1];
-
-            const current = snake[i];
-
-
-            const dx =
-                Math.abs(
-                    current.x -
-                    previous.x
-                );
-
-
-            const dy =
-                Math.abs(
-                    current.y -
-                    previous.y
-                );
-
-
-            /*
-               اگر فاصله زیاد است یعنی
-               مار از دیوار رد شده.
-            */
-
-            if (
-                dx > GRID * 1.5 ||
-                dy > GRID * 1.5
-            ) {
-
-                ctx.moveTo(
-                    current.x,
-                    current.y + offsetY
-                );
-
-            } else {
-
-                ctx.lineTo(
-                    current.x,
-                    current.y + offsetY
-                );
-            }
-        }
-    }
-
-
-    /* =================================================
-       ⚫ لایه مشکی بدن
-    ================================================= */
-
-    drawSnakePath(0);
-
-    ctx.strokeStyle = "#050505";
-
-    ctx.lineWidth = 31;
-
-    ctx.shadowColor = "#000000";
-
-    ctx.shadowBlur = 18;
-
-    ctx.stroke();
-
-
-    /* =================================================
-       🟢 نور سبز
-    ================================================= */
-
-    drawSnakePath(0);
-
-    ctx.strokeStyle = "#39ff00";
-
-    ctx.lineWidth = 10;
-
-    ctx.shadowColor = "#39ff00";
-
-    ctx.shadowBlur = 16;
-
-    ctx.stroke();
-
-
-    /* =================================================
-       سبز روشن وسط
-    ================================================= */
-
-    drawSnakePath(-1);
-
-    ctx.strokeStyle = "#b5ff45";
-
-    ctx.lineWidth = 3;
-
-    ctx.shadowBlur = 5;
-
-    ctx.stroke();
-
-
-    /* =================================================
-       🔴 سر قرمز
-    ================================================= */
-
-    const head = snake[0];
-
-
-    ctx.shadowColor = "#ff0000";
-
-    ctx.shadowBlur = 25;
-
-
-    ctx.beginPath();
-
-    ctx.arc(
-        head.x,
-        head.y,
-        21,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.fillStyle = "#e71919";
-
-    ctx.fill();
-
-
-    /* قسمت روشن سر */
-
-    ctx.beginPath();
-
-    ctx.arc(
-        head.x - direction.x * 4,
-        head.y - direction.y * 4,
-        15,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.fillStyle = "#ff3939";
-
-    ctx.fill();
-
-
-    /* =================================================
-       چشم‌ها
-    ================================================= */
-
-    const sx = -direction.y * 8;
-    const sy = direction.x * 8;
-
-    const fx = direction.x * 9;
-    const fy = direction.y * 9;
-
-
-    const eye1 = {
-
-        x:
-            head.x +
-            fx +
-            sx,
-
-        y:
-            head.y +
-            fy +
-            sy
-    };
-
-
-    const eye2 = {
-
-        x:
-            head.x +
-            fx -
-            sx,
-
-        y:
-            head.y +
-            fy -
-            sy
-    };
-
-
-    ctx.shadowBlur = 2;
-
-    ctx.fillStyle = "#000000";
-
-
-    ctx.beginPath();
-
-    ctx.arc(
-        eye1.x,
-        eye1.y,
-        5,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.arc(
-        eye2.x,
-        eye2.y,
-        5,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.fill();
-
-
-    /* =================================================
-       زبان قرمز
-    ================================================= */
-
-    ctx.shadowColor = "#ff0000";
-
-    ctx.shadowBlur = 8;
-
-    ctx.strokeStyle = "#ff3030";
-
-    ctx.lineWidth = 2;
-
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        head.x + direction.x * 17,
-        head.y + direction.y * 17
-    );
-
-    ctx.lineTo(
-        head.x + direction.x * 32,
-        head.y + direction.y * 32
-    );
-
-    ctx.stroke();
-
-
-    /* دو شاخه زبان */
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        head.x + direction.x * 32,
-        head.y + direction.y * 32
-    );
-
-    ctx.lineTo(
-        head.x +
-        direction.x * 40 -
-        direction.y * 5,
-
-        head.y +
-        direction.y * 40 +
-        direction.x * 5
-    );
-
-
-    ctx.moveTo(
-        head.x + direction.x * 32,
-        head.y + direction.y * 32
-    );
-
-    ctx.lineTo(
-        head.x +
-        direction.x * 40 +
-        direction.y * 5,
-
-        head.y +
-        direction.y * 40 -
-        direction.x * 5
-    );
-
-    ctx.stroke();
-
-
-    ctx.restore();
+    drawHead();
 }
 
 
 /* =====================================================
-   رسم کل بازی
+   رسم همه چیز
 ===================================================== */
 
-function draw() {
+function draw(){
 
     ctx.clearRect(
         0,
@@ -1615,7 +1551,6 @@ function draw() {
         W,
         H
     );
-
 
     drawApple();
 
@@ -1629,14 +1564,12 @@ function draw() {
    Game Over
 ===================================================== */
 
-function endGame() {
+function endGame(){
 
-    gameOver = true;
-
+    gameOver=true;
 
     document.getElementById("finalScore")
-        .textContent = score;
-
+        .textContent=score;
 
     document.getElementById("gameOver")
         .classList.add("show");
@@ -1647,22 +1580,20 @@ function endGame() {
    حلقه بازی
 ===================================================== */
 
-function loop(time) {
+function loop(time){
 
-    if (gameOver) return;
+    if(gameOver) return;
 
-
-    if (
-        time - lastTime >= SPEED
-    ) {
+    if(
+        time-lastTime>=SPEED
+    ){
 
         update();
 
         draw();
 
-        lastTime = time;
+        lastTime=time;
     }
-
 
     requestAnimationFrame(loop);
 }
@@ -1674,13 +1605,13 @@ function loop(time) {
 
 document.addEventListener(
     "keydown",
-    function(e) {
+    function(e){
 
-        if (
-            e.key === "ArrowUp" ||
-            e.key === "w" ||
-            e.key === "W"
-        ) {
+        if(
+            e.key==="ArrowUp" ||
+            e.key==="w" ||
+            e.key==="W"
+        ){
 
             changeDirection("up");
 
@@ -1688,11 +1619,11 @@ document.addEventListener(
         }
 
 
-        if (
-            e.key === "ArrowDown" ||
-            e.key === "s" ||
-            e.key === "S"
-        ) {
+        if(
+            e.key==="ArrowDown" ||
+            e.key==="s" ||
+            e.key==="S"
+        ){
 
             changeDirection("down");
 
@@ -1700,11 +1631,11 @@ document.addEventListener(
         }
 
 
-        if (
-            e.key === "ArrowLeft" ||
-            e.key === "a" ||
-            e.key === "A"
-        ) {
+        if(
+            e.key==="ArrowLeft" ||
+            e.key==="a" ||
+            e.key==="A"
+        ){
 
             changeDirection("left");
 
@@ -1712,11 +1643,11 @@ document.addEventListener(
         }
 
 
-        if (
-            e.key === "ArrowRight" ||
-            e.key === "d" ||
-            e.key === "D"
-        ) {
+        if(
+            e.key==="ArrowRight" ||
+            e.key==="d" ||
+            e.key==="D"
+        ){
 
             changeDirection("right");
 
@@ -1724,10 +1655,10 @@ document.addEventListener(
         }
 
 
-        if (
-            e.code === "Space" &&
+        if(
+            e.code==="Space" &&
             gameOver
-        ) {
+        ){
 
             restart();
         }
@@ -1740,99 +1671,94 @@ document.addEventListener(
    Swipe موبایل
 ===================================================== */
 
-let touchStartX = 0;
-let touchStartY = 0;
+let touchStartX=0;
+let touchStartY=0;
 
 
 document.addEventListener(
     "touchstart",
-    function(e) {
+    function(e){
 
-        if (!e.touches.length) return;
+        if(!e.touches.length) return;
 
-        touchStartX =
+        touchStartX=
             e.touches[0].clientX;
 
-        touchStartY =
+        touchStartY=
             e.touches[0].clientY;
 
     },
-    {
-        passive: true
-    }
+    {passive:true}
 );
 
 
 document.addEventListener(
     "touchend",
-    function(e) {
+    function(e){
 
-        if (!e.changedTouches.length)
+        if(!e.changedTouches.length)
             return;
 
 
-        const touchEndX =
+        const endX=
             e.changedTouches[0].clientX;
 
-        const touchEndY =
+        const endY=
             e.changedTouches[0].clientY;
 
 
-        const dx =
-            touchEndX -
-            touchStartX;
+        const dx=
+            endX-touchStartX;
 
-        const dy =
-            touchEndY -
-            touchStartY;
+        const dy=
+            endY-touchStartY;
 
 
-        const minSwipe = 25;
+        const minSwipe=25;
 
 
-        if (
-            Math.abs(dx) < minSwipe &&
-            Math.abs(dy) < minSwipe
-        ) {
+        if(
+            Math.abs(dx)<minSwipe &&
+            Math.abs(dy)<minSwipe
+        ){
+
             return;
         }
 
 
-        if (
-            Math.abs(dx) >
+        if(
+            Math.abs(dx)>
             Math.abs(dy)
-        ) {
+        ){
 
-            if (dx > 0) {
+            if(dx>0){
 
                 changeDirection("right");
 
-            } else {
+            }else{
 
                 changeDirection("left");
             }
 
-        } else {
+        }else{
 
-            if (dy > 0) {
+            if(dy>0){
 
                 changeDirection("down");
 
-            } else {
+            }else{
 
                 changeDirection("up");
             }
         }
 
     },
-    {
-        passive: true
-    }
+    {passive:true}
 );
 
 
 /* =====================================================
-   شروع بازی
+   شروع
 ===================================================== */
 
 restart();
