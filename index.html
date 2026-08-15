@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>Snake Game</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#020902;color:#9cff00;font-family:Arial,sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh}
+.game{display:flex;gap:20px;padding:20px;max-width:1100px;width:100%}
+canvas{background:#020d03;border:2px solid #9cff00;border-radius:18px;box-shadow:0 0 25px #5aff00;max-width:760px;width:100%;height:auto}
+.panel{width:260px}h1{text-align:center;font-size:38px;margin:5px 0 25px;text-shadow:0 0 15px #76ff00}.box{border:1px solid #5eff00;border-radius:15px;padding:18px;margin-bottom:15px;text-align:center;background:rgba(0,20,0,.55)}.label{color:#fff3a0;font-size:20px}.value{font-size:30px;margin-top:8px}button{width:100%;padding:15px;border-radius:12px;border:2px solid #9cff00;background:transparent;color:#9cff00;font-size:20px;cursor:pointer}
+@media(max-width:900px){.game{flex-direction:column;align-items:center}.panel{width:100%}}
+</style>
+</head>
+<body>
+<div class="game">
+<canvas id="game" width="760" height="600"></canvas>
+<div class="panel">
+<h1>🐍 SNAKE</h1>
+<div class="box"><div class="label">امتیاز</div><div class="value" id="score">0</div></div>
+<div class="box"><div class="label">بهترین امتیاز</div><div class="value" id="best">0</div></div>
+<div class="box"><div class="label">کنترل</div><div style="color:white;margin-top:10px">⬆️ ⬇️ ⬅️ ➡️<br><br>با کلیدهای جهت حرکت کن</div></div>
+<div class="box"><div class="label">قوانین</div><div style="color:white;margin-top:10px">🍎 سیب را بخور<br><br>🐍 مار بزرگ‌تر می‌شود<br><br>🔄 دیوارها قابل عبور هستند</div></div>
+<button onclick="restart()">↻ شروع دوباره</button>
+</div></div>
+<script>
+const canvas=document.getElementById("game"),ctx=canvas.getContext("2d"),W=canvas.width,H=canvas.height;
+let snake,apple,direction,nextDirection,score,gameOver,speed,lastTime=0;
+let best=Number(localStorage.getItem("snakeBest"))||0;document.getElementById("best").textContent=best;
+function restart(){snake=[];for(let i=0;i<7;i++)snake.push({x:380-i*22,y:300});direction={x:1,y:0};nextDirection={x:1,y:0};score=0;gameOver=false;speed=110;document.getElementById("score").textContent=0;createApple();lastTime=performance.now();requestAnimationFrame(loop)}
+function createApple(){apple={x:30+Math.random()*(W-60),y:30+Math.random()*(H-60)};for(const p of snake){if(Math.hypot(apple.x-p.x,apple.y-p.y)<45){createApple();return}}}
+function update(){if(gameOver)return;direction=nextDirection;let head={x:snake[0].x+direction.x*22,y:snake[0].y+direction.y*22};
+if(head.x<0)head.x=W;if(head.x>W)head.x=0;if(head.y<0)head.y=H;if(head.y>H)head.y=0;
+for(let i=1;i<snake.length;i++)if(Math.hypot(head.x-snake[i].x,head.y-snake[i].y)<17){endGame();return}
+snake.unshift(head);
+if(Math.hypot(head.x-apple.x,head.y-apple.y)<28){score+=10;document.getElementById("score").textContent=score;if(score>best){best=score;localStorage.setItem("snakeBest",best);document.getElementById("best").textContent=best}if(speed>55)speed-=3;createApple()}else snake.pop()}
+function drawApple(){ctx.save();ctx.shadowColor="#ff2200";ctx.shadowBlur=20;ctx.fillStyle="#ff3020";ctx.beginPath();ctx.arc(apple.x-7,apple.y,13,0,Math.PI*2);ctx.arc(apple.x+7,apple.y,13,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(apple.x,apple.y+4,17,0,Math.PI*2);ctx.fill();ctx.shadowBlur=5;ctx.beginPath();ctx.ellipse(apple.x+9,apple.y-18,9,5,-.5,0,Math.PI*2);ctx.fillStyle="#55ff00";ctx.fill();ctx.beginPath();ctx.moveTo(apple.x,apple.y-12);ctx.lineTo(apple.x+2,apple.y-22);ctx.strokeStyle="#8b4513";ctx.lineWidth=4;ctx.stroke();ctx.restore()}
+function drawSnake(){if(snake.length<2)return;ctx.save();ctx.lineCap="round";ctx.lineJoin="round";ctx.beginPath();ctx.moveTo(snake[0].x,snake[0].y);for(let i=1;i<snake.length;i++)ctx.lineTo(snake[i].x,snake[i].y);ctx.strokeStyle="#4dff00";ctx.lineWidth=30;ctx.shadowColor="#52ff00";ctx.shadowBlur=22;ctx.stroke();ctx.beginPath();ctx.moveTo(snake[0].x,snake[0].y-3);for(let i=1;i<snake.length;i++)ctx.lineTo(snake[i].x,snake[i].y-3);ctx.strokeStyle="#9cff35";ctx.lineWidth=8;ctx.shadowBlur=5;ctx.stroke();
+let h=snake[0],sx=-direction.y*8,sy=direction.x*8,fx=direction.x*8,fy=direction.y*8,e1={x:h.x+fx+sx,y:h.y+fy+sy},e2={x:h.x+fx-sx,y:h.y+fy-sy};ctx.shadowColor="#7cff00";ctx.shadowBlur=25;ctx.beginPath();ctx.arc(h.x,h.y,20,0,Math.PI*2);ctx.fillStyle="#63ff00";ctx.fill();ctx.shadowBlur=3;ctx.fillStyle="black";ctx.beginPath();ctx.arc(e1.x,e1.y,5,0,Math.PI*2);ctx.arc(e2.x,e2.y,5,0,Math.PI*2);ctx.fill();
+ctx.beginPath();ctx.moveTo(h.x+direction.x*18,h.y+direction.y*18);ctx.lineTo(h.x+direction.x*30,h.y+direction.y*30);ctx.strokeStyle="#ff3030";ctx.lineWidth=2;ctx.stroke();ctx.beginPath();ctx.moveTo(h.x+direction.x*30,h.y+direction.y*30);ctx.lineTo(h.x+direction.x*36-direction.y*5,h.y+direction.y*36+direction.x*5);ctx.moveTo(h.x+direction.x*30,h.y+direction.y*30);ctx.lineTo(h.x+direction.x*36+direction.y*5,h.y+direction.y*36-direction.x*5);ctx.stroke();ctx.restore()}
+function draw(){ctx.clearRect(0,0,W,H);drawApple();drawSnake()}
+function endGame(){gameOver=true;ctx.fillStyle="rgba(0,0,0,.65)";ctx.fillRect(0,0,W,H);ctx.fillStyle="#9cff00";ctx.font="bold 50px Arial";ctx.textAlign="center";ctx.fillText("GAME OVER",W/2,H/2);ctx.font="24px Arial";ctx.fillText("برای شروع دوباره کلیک کن",W/2,H/2+45)}
+function loop(t){if(gameOver)return;if(t-lastTime>speed){update();draw();lastTime=t}requestAnimationFrame(loop)}
+document.addEventListener("keydown",e=>{if(e.key==="ArrowUp"&&direction.y!==1)nextDirection={x:0,y:-1};if(e.key==="ArrowDown"&&direction.y!==-1)nextDirection={x:0,y:1};if(e.key==="ArrowLeft"&&direction.x!==1)nextDirection={x:-1,y:0};if(e.key==="ArrowRight"&&direction.x!==-1)nextDirection={x:1,y:0}});
+restart();
+</script>
+</body>
+</html>
