@@ -15,6 +15,14 @@ canvas{background:#020d03;border:2px solid #9cff00;border-radius:18px;box-shadow
 <body>
 <div class="game">
 <canvas id="game" width="760" height="600"></canvas>
+  <div class="mobile-controls">
+    <button onclick="changeDirection('up')">⬆️</button>
+    <div>
+        <button onclick="changeDirection('left')">⬅️</button>
+        <button onclick="changeDirection('down')">⬇️</button>
+        <button onclick="changeDirection('right')">➡️</button>
+    </div>
+</div>
 <div class="panel">
 <h1>🐍 SNAKE</h1>
 <div class="box"><div class="label">امتیاز</div><div class="value" id="score">0</div></div>
